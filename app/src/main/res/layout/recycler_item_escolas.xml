@@ -12,7 +12,7 @@
         android:background="@color/md_theme_primaryContainer"
         android:clickable="true"
         android:focusable="true"
-        android:onClick="click">
+        android:onClick="escola_Click">
 
         <ImageView
             android:id="@+id/imageView1"
