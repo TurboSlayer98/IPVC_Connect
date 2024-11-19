@@ -5,113 +5,114 @@
     android:id="@+id/info_empresas_activity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".InfoEmpresa">
+    tools:context=".InfoEmpresa"
+    android:background="@color/md_theme_background">
 
+    <!-- Top Bar -->
     <RelativeLayout
-        android:id="@+id/relativeLayout1"
+        android:id="@+id/topBar"
         android:layout_width="match_parent"
-        android:layout_height="100dp">
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/md_theme_primaryContainer">
 
         <ImageButton
-            android:id="@+id/button1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:id="@+id/btnBack"
+            android:layout_width="48dp"
+            android:layout_height="48dp"
             android:layout_centerVertical="true"
-            android:layout_marginStart="20dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginStart="8dp"
+            android:background="?attr/selectableItemBackgroundBorderless"
             android:src="@drawable/arrow_back_40"
-            android:background="?android:attr/selectableItemBackgroundBorderless"/>
+            android:contentDescription="@string/back"/>
 
         <TextView
-            android:id="@+id/textView1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerVertical="true"
-            android:layout_marginStart="25dp"
-            android:text="Detalhes"
-            android:textSize="40sp"
-            android:textStyle="bold"
-            android:layout_toEndOf="@id/button1"/>
-    </RelativeLayout>
-
-    <RelativeLayout
-        android:id="@+id/relativeLayout2"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/relativeLayout1">
-
-        <ImageView
-            android:id="@id/imageView1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_marginVertical="10dp"
-            android:layout_marginHorizontal="20dp"
-            android:src="@mipmap/ic_launcher"/>
-
-        <TextView
-            android:id="@+id/textView2"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/imageView1"
-            android:layout_marginVertical="10dp"
-            android:layout_marginHorizontal="20dp"
-            android:text="Empresa X"
-            android:textSize="40sp"
-            android:textAlignment="center"
+            android:layout_centerInParent="true"
+            android:text="@string/company_info"
+            android:textSize="20sp"
             android:textStyle="bold"/>
-
-        <TextView
-            android:id="@+id/textView3"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/textView2"
-            android:layout_marginVertical="10dp"
-            android:layout_marginHorizontal="20dp"
-            android:text="Informacao sobre a empresa."
-            android:textSize="20sp" />
-
-        <TextView
-            android:id="@+id/textView4"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/textView3"
-            android:layout_marginVertical="10dp"
-            android:layout_marginHorizontal="20dp"
-            android:text="Comentarios"
-            android:textSize="25sp" />
-
-        <EditText
-            android:id="@+id/editText"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginVertical="10dp"
-            android:layout_marginHorizontal="20dp"
-            android:layout_below="@id/textView4"
-            android:hint="Coment"/>
     </RelativeLayout>
 
+    <!-- Content ScrollView -->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/bottomButtons"
+        android:layout_below="@id/topBar">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <ImageView
+                android:id="@+id/companyLogo"
+                android:layout_width="200dp"
+                android:layout_height="200dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="16dp"/>
+
+            <TextView
+                android:id="@+id/companyName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="24sp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_marginBottom="16dp"/>
+
+            <TextView
+                android:id="@+id/companyDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="16sp"
+                android:layout_marginBottom="24dp"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/comments"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp"/>
+
+            <EditText
+                android:id="@+id/commentInput"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/add_comment"
+                android:padding="12dp"
+                android:background="@color/md_theme_surfaceVariant"
+                android:minHeight="100dp"
+                android:gravity="top"/>
+        </LinearLayout>
+    </ScrollView>
+
+    <!-- Bottom Buttons -->
     <LinearLayout
-        android:id="@+id/linearLayout1"
+        android:id="@+id/bottomButtons"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true">
+        android:layout_alignParentBottom="true"
+        android:padding="16dp"
+        android:orientation="horizontal">
 
         <Button
-            android:id="@+id/button2"
-            android:layout_width="match_parent"
+            android:id="@+id/btnCall"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_margin="10dp"
-            android:text="Ligar"/>
+            android:text="@string/call"
+            android:layout_marginEnd="8dp"/>
 
         <Button
-            android:id="@+id/button3"
-            android:layout_width="match_parent"
+            android:id="@+id/btnEmail"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:layout_margin="10dp"
-            android:text="Email"/>
+            android:text="@string/email"
+            android:layout_marginStart="8dp"/>
     </LinearLayout>
-
 </RelativeLayout>
