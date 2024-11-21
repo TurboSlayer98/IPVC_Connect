@@ -1,12 +1,3 @@
 <resources>
     <string name="app_name">IPVC Connect</string>
-    <string name="schools">Schools</string>
-    <string name="courses">Courses</string>
-    <string name="partner_companies">Partner Companies</string>
-    <string name="back">Back</string>
-    <string name="call">Call</string>
-    <string name="email">Email</string>
-    <string name="add_comment">Add a comment...</string>
-    <string name="comments">Comments</string>
-    <string name="company_info">Company Information</string>
 </resources>

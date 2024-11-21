@@ -13,25 +13,20 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_main)
-        
-        // Set up button click listeners
-        findViewById<Button>(R.id.btnSchools).setOnClickListener {
-            startActivity(Intent(this, EscolasActivity::class.java))
-        }
-        
-        findViewById<Button>(R.id.btnCourses).setOnClickListener {
-            startActivity(Intent(this, CursosActivity::class.java))
-        }
-        
-        findViewById<Button>(R.id.btnCompanies).setOnClickListener {
-            startActivity(Intent(this, EmpresasActivity::class.java))
-        }
-
-        // Set up window insets
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
             val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
             insets
+        }
+
+        findViewById<Button>(R.id.buttonMaps).setOnClickListener {
+            val intent = Intent(this, MapsActivity::class.java)
+            startActivity(intent)
+        }
+
+        findViewById<Button>(R.id.buttonStart).setOnClickListener {
+            val intent = Intent(this, EscolasActivity::class.java)
+            startActivity(intent)
         }
     }
 }

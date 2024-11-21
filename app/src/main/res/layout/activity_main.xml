@@ -11,23 +11,16 @@
     <RelativeLayout
         android:id="@+id/relativeLayout1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="32dp">
 
         <ImageView
             android:id="@+id/imageView1"
             android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:src="@drawable/logo_ipvc_removebg_preview"
-            android:contentDescription="IPVC Logo"/>
     </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/relativeLayout2"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_centerInParent="true"
-        android:padding="16dp">
 
         <TextView
             android:id="@+id/textView1"
@@ -37,37 +30,11 @@
             android:textSize="40sp"
             android:textAlignment="center"
             android:textStyle="bold"
-            android:layout_marginBottom="48dp"/>
 
-        <LinearLayout
-            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/textView1"
-            android:orientation="vertical"
-            android:gravity="center">
 
-            <Button
-                android:id="@+id/btnSchools"
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:text="Schools"
-                android:textSize="18sp"
-                android:layout_marginBottom="16dp"/>
-
-            <Button
-                android:id="@+id/btnCourses"
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:text="Courses"
-                android:textSize="18sp"
-                android:layout_marginBottom="16dp"/>
-
-            <Button
-                android:id="@+id/btnCompanies"
-                android:layout_width="250dp"
-                android:layout_height="wrap_content"
-                android:text="Partner Companies"
-                android:textSize="18sp"/>
-        </LinearLayout>
+        <Button
+            android:layout_height="wrap_content"
     </RelativeLayout>
 </RelativeLayout>
