@@ -22,20 +22,12 @@ import com.google.android.gms.maps.model.MarkerOptions
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
-import android.Manifest
-import android.content.pm.PackageManager
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 
 class InfoEmpresaActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var mMap: GoogleMap
     private lateinit var comentarios: MutableList<Comentario>
     private lateinit var adapter: ComentariosAdapter
     private lateinit var empresaLatLng: LatLng
-
-    companion object {
-        private const val PERMISSION_REQUEST_CALL_PHONE = 1
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -93,49 +85,17 @@ class InfoEmpresaActivity : AppCompatActivity(), OnMapReadyCallback {
 
         // Botões de contato
         findViewById<Button>(R.id.buttonLigar).setOnClickListener {
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE)
-                != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(this,
-                    arrayOf(Manifest.permission.CALL_PHONE),
-                    PERMISSION_REQUEST_CALL_PHONE)
-            } else {
-                realizarChamada(empresaTelefone)
+            val intent = Intent(Intent.ACTION_DIAL).apply {
+                data = Uri.parse("tel:$empresaTelefone")
             }
+            startActivity(intent)
         }
 
         findViewById<Button>(R.id.buttonEmail).setOnClickListener {
-            enviarEmail(empresaEmail)
-        }
-    }
-
-    private fun realizarChamada(telefone: String) {
-        val intent = Intent(Intent.ACTION_DIAL).apply {
-            data = Uri.parse("tel:$telefone")
-        }
-        startActivity(intent)
-    }
-
-    private fun enviarEmail(email: String) {
-        val intent = Intent(Intent.ACTION_SENDTO).apply {
-            data = Uri.parse("mailto:$email")
-        }
-        startActivity(intent)
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        when (requestCode) {
-            PERMISSION_REQUEST_CALL_PHONE -> {
-                if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                    val empresaTelefone = intent.getStringExtra("EMPRESA_TELEFONE") ?: ""
-                    realizarChamada(empresaTelefone)
-                }
-                return
+            val intent = Intent(Intent.ACTION_SENDTO).apply {
+                data = Uri.parse("mailto:$empresaEmail")
             }
+            startActivity(intent)
         }
     }
 

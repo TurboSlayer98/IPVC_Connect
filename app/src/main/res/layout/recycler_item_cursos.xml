@@ -18,15 +18,17 @@
             android:id="@+id/cursoNome"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="18sp"
+            android:textSize="20sp"
             android:textStyle="bold"
-            android:textColor="@color/md_theme_primary"/>
+            android:textColor="@android:color/black"
+            android:layout_marginBottom="8dp"/>
 
         <TextView
             android:id="@+id/cursoDescricao"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:textSize="14sp"/>
+            android:textSize="16sp"
+            android:textColor="@android:color/darker_gray"/>
+
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>
