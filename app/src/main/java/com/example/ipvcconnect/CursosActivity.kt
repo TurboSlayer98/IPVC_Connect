@@ -8,6 +8,7 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.ipvcconnect.adapter.CourseAdapter
 import com.example.ipvcconnect.api.ApiClient
 import com.example.ipvcconnect.api.ApiService
 import com.example.ipvcconnect.models.Course
@@ -40,11 +41,14 @@ class CursosActivity : AppCompatActivity() {
                     }
                 }
             }
+
             override fun onFailure(call: Call<List<Course>>, t: Throwable) {
                 Toast.makeText(
                     this@CursosActivity,
                     "Something went wrong ${t.message}",
-                    Toast.LENGTH_SHORT).show()
+                    Toast.LENGTH_SHORT
+                ).show()
             }
+        })
     }
 }
