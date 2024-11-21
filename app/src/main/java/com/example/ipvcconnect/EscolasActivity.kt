@@ -1,5 +1,6 @@
 package com.example.ipvcconnect
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
@@ -38,7 +39,12 @@ class EscolasActivity : AppCompatActivity() {
                     recyclerView.apply {
                         setHasFixedSize(true)
                         layoutManager = LinearLayoutManager(this@EscolasActivity)
-                        adapter = SchoolAdapter(response.body()!!)
+                        adapter = SchoolAdapter(response.body()!!) { school ->
+                            // Handle school click
+                            val intent = Intent(this@EscolasActivity, CursosActivity::class.java)
+                            intent.putExtra("SCHOOL_ID", school.id)
+                            startActivity(intent)
+                        }
                     }
                 }
             }
@@ -46,7 +52,8 @@ class EscolasActivity : AppCompatActivity() {
                 Toast.makeText(
                     this@EscolasActivity,
                     "Something went wrong ${t.message}",
-                    Toast.LENGTH_SHORT).show()
+                    Toast.LENGTH_SHORT
+                ).show()
             }
         })
     }

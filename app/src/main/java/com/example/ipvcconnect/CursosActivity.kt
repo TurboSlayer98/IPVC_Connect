@@ -1,6 +1,7 @@
 package com.example.ipvcconnect
 
 import android.os.Bundle
+import android.widget.ImageButton
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -27,8 +28,21 @@ class CursosActivity : AppCompatActivity() {
             insets
         }
 
+        // Get school ID from intent
+        val schoolId = intent.getIntExtra("SCHOOL_ID", -1)
+        if (schoolId == -1) {
+            Toast.makeText(this, "Error: School not found", Toast.LENGTH_SHORT).show()
+            finish()
+            return
+        }
+
+        // Set up back button
+        findViewById<ImageButton>(R.id.button1).setOnClickListener {
+            onBackPressed()
+        }
+
         val request = ApiClient.buildService(ApiService::class.java)
-        val call = request.getAllCourses()
+        val call = request.getCoursesBySchool(schoolId)
 
         call.enqueue(object : Callback<List<Course>> {
             override fun onResponse(call: Call<List<Course>>, response: Response<List<Course>>) {
@@ -39,6 +53,12 @@ class CursosActivity : AppCompatActivity() {
                         layoutManager = LinearLayoutManager(this@CursosActivity)
                         adapter = CourseAdapter(response.body()!!)
                     }
+                } else {
+                    Toast.makeText(
+                        this@CursosActivity,
+                        "Error loading courses",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
 

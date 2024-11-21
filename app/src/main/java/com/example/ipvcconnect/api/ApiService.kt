@@ -16,6 +16,9 @@ interface ApiService {
     @GET("schools/{id}")
     fun getSchoolById(@Path("id") id: Int): Call<School>
 
+    @GET("schools/{id}/courses")
+    fun getCoursesBySchool(@Path("id") id: Int): Call<List<Course>>
+
     // Courses endpoints
     @GET("courses")
     fun getAllCourses(): Call<List<Course>>

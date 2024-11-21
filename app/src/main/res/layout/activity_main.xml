@@ -52,7 +52,8 @@
                 android:layout_height="wrap_content"
                 android:text="Schools"
                 android:textSize="18sp"
-                android:layout_marginBottom="16dp"/>
+                android:layout_marginBottom="16dp"
+                android:onClick="startClick"/>
 
             <Button
                 android:id="@+id/btnCourses"

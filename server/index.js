@@ -19,10 +19,19 @@ const pool = new Pool({
     port: process.env.DB_PORT,
 });
 
+// Test database connection
+pool.query('SELECT NOW()', (err, res) => {
+    if (err) {
+        console.error('Database connection error:', err);
+    } else {
+        console.log('Database connected successfully');
+    }
+});
+
 // Schools endpoints
 app.get('/schools', async (req, res) => {
     try {
-        const result = await pool.query('SELECT * FROM schools');
+        const result = await pool.query('SELECT * FROM public.schools');
         res.json(result.rows);
     } catch (err) {
         res.status(500).json({ error: err.message });
@@ -108,6 +117,17 @@ app.post('/companies/:companyId/comments', async (req, res) => {
             [companyId, text]
         );
         res.status(201).json(result.rows[0]);
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
+// Add this endpoint to get courses by school ID
+app.get('/schools/:id/courses', async (req, res) => {
+    try {
+        const { id } = req.params;
+        const result = await pool.query('SELECT * FROM courses WHERE school_id = $1', [id]);
+        res.json(result.rows);
     } catch (err) {
         res.status(500).json({ error: err.message });
     }

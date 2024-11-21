@@ -12,8 +12,8 @@ class CourseAdapter(private val courseList: List<Course>) : RecyclerView.Adapter
 
     // Define o ViewHolder para a RecyclerView
     class CourseViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        //val courseName: TextView = itemView.findViewById(R.id.schoolName)
-        //val courseDescription: TextView = itemView.findViewById(R.id.schoolDescription)
+        val courseName: TextView = itemView.findViewById(R.id.cardTitle1)
+        val courseDescription: TextView = itemView.findViewById(R.id.cardTitle2)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CourseViewHolder {
@@ -26,8 +26,8 @@ class CourseAdapter(private val courseList: List<Course>) : RecyclerView.Adapter
         // Vincula os dados do usuário aos elementos da UI no ViewHolder
         val course = courseList[position]
         //holder.schoolLogo
-        //holder.courseName.text = course.name
-        //holder.courseDescription.text = course.description
+        holder.courseName.text = course.name
+        holder.courseDescription.text = course.description
     }
 
     override fun getItemCount(): Int {

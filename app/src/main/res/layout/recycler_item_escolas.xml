@@ -12,7 +12,7 @@
         android:background="@color/md_theme_primaryContainer"
         android:clickable="true"
         android:focusable="true"
-        android:onClick="escola_Click">
+        android:onClick="escolaClick">
 
         <ImageView
             android:id="@+id/imageView1"
@@ -22,20 +22,29 @@
             android:layout_margin="15dp"
             android:layout_centerVertical="true"/>
 
-        <RelativeLayout
-            android:id="@+id/relativeLayout2"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/linearLayout1"
+            android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:layout_toEndOf="@id/imageView1">
+            android:layout_toEndOf="@id/imageView1"
+            android:orientation="vertical">
 
             <TextView
                 android:id="@+id/cardTitle1"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:text="Nome da Escola"
+                android:layout_height="0dp"
+                android:layout_weight="1"
                 android:textSize="20sp"
                 android:textStyle="bold"
                 android:padding="10dp"/>
-        </RelativeLayout>
+
+            <TextView
+                android:id="@+id/cardTitle2"
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:textSize="20sp"
+                android:padding="10dp"/>
+        </LinearLayout>
     </RelativeLayout>
 </RelativeLayout>
