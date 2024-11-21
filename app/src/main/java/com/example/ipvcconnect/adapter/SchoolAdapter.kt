@@ -13,9 +13,9 @@ class SchoolAdapter(private val schoolList: List<School>) : RecyclerView.Adapter
 
     // Define o ViewHolder para a RecyclerView
     class SchoolViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val schoolLogo: ImageView = itemView.findViewById(R.id.schoolLogo)
-        val schoolName: TextView = itemView.findViewById(R.id.schoolName)
-        val schoolDescription: TextView = itemView.findViewById(R.id.schoolDescription)
+        //val schoolLogo: ImageView = itemView.findViewById(R.id.schoolLogo)
+        //val schoolName: TextView = itemView.findViewById(R.id.schoolName)
+        //val schoolDescription: TextView = itemView.findViewById(R.id.schoolDescription)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SchoolViewHolder {
@@ -28,8 +28,8 @@ class SchoolAdapter(private val schoolList: List<School>) : RecyclerView.Adapter
         // Vincula os dados do usuário aos elementos da UI no ViewHolder
         val school = schoolList[position]
         //holder.schoolLogo
-        holder.schoolName.text = school.name
-        holder.schoolDescription.text = school.description
+        //holder.schoolName.text = school.name
+        //holder.schoolDescription.text = school.description
     }
 
     override fun getItemCount(): Int {

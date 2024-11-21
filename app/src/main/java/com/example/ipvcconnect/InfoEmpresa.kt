@@ -14,19 +14,10 @@ class InfoEmpresa : AppCompatActivity() {
         enableEdgeToEdge()
         setContentView(R.layout.activity_info_empresa)
 
-        // Set up back button
-        findViewById<ImageButton>(R.id.btnBack).setOnClickListener {
-            onBackPressed()
-        }
-
-        // Set up call button
-        findViewById<Button>(R.id.btnCall).setOnClickListener {
-            // Implement phone call functionality
-        }
-
-        // Set up email button
-        findViewById<Button>(R.id.btnEmail).setOnClickListener {
-            // Implement email functionality
+        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.info_empresas_activity)) { v, insets ->
+            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
+            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
+            insets
         }
     }
 }
