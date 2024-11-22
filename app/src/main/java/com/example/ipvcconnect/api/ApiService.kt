@@ -13,8 +13,8 @@ interface ApiService {
     @GET("schools")
     fun getAllSchools(): Call<List<School>>
 
-    @GET("schools/{id}")
-    fun getSchoolById(@Path("id") id: Int): Call<School>
+//    @GET("schools/{id}")
+//    fun getSchoolById(@Path("id") id: Int): Call<School>
 
     @GET("schools/{id}/courses")
     fun getCoursesBySchool(@Path("id") id: Int): Call<List<Course>>
@@ -32,6 +32,9 @@ interface ApiService {
 
     @GET("companies/{id}")
     fun getCompanyById(@Path("id") id: Int): Call<Company>
+
+    @GET("courses/{id}/companies")
+    fun getCompaniesByCourse(@Path("id") courseId: Int): Call<List<Course>>
 
     // Comments endpoints
     @GET("companies/{companyId}/comments")

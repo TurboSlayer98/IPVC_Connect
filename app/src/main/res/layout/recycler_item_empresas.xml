@@ -2,49 +2,40 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/recycler_item_empresas"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="150dp"
+    android:layout_marginBottom="10dp"
+    android:background="@color/md_theme_primaryContainer">
 
-    <RelativeLayout
-        android:id="@+id/relativeLayout1"
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@mipmap/ic_launcher"
+        android:layout_margin="15dp"
+        android:layout_centerVertical="true"/>
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
         android:layout_width="match_parent"
-        android:layout_height="150dp"
-        android:layout_marginBottom="10dp"
-        android:background="@color/md_theme_primaryContainer"
-        android:clickable="true"
-        android:focusable="true"
-        android:onClick="click">
+        android:layout_height="match_parent"
+        android:layout_toEndOf="@id/imageView1"
+        android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/imageView1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/ic_launcher"
-            android:layout_margin="15dp"
-            android:layout_centerVertical="true"/>
-
-        <LinearLayout
-            android:id="@+id/linearLayout1"
+        <TextView
+            android:id="@+id/cardTitle1"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_toEndOf="@id/imageView1"
-            android:orientation="vertical">
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            android:padding="10dp"/>
 
-            <TextView
-                android:id="@+id/cardTitle1"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:textSize="20sp"
-                android:textStyle="bold"
-                android:padding="10dp"/>
-
-            <TextView
-                android:id="@+id/cardTitle2"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_weight="1"
-                android:textSize="20sp"
-                android:padding="10dp"/>
-        </LinearLayout>
-    </RelativeLayout>
+        <TextView
+            android:id="@+id/cardTitle2"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:textSize="20sp"
+            android:padding="10dp"/>
+    </LinearLayout>
 </RelativeLayout>

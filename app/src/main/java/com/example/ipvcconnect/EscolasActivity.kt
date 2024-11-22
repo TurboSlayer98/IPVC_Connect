@@ -39,12 +39,7 @@ class EscolasActivity : AppCompatActivity() {
                     recyclerView.apply {
                         setHasFixedSize(true)
                         layoutManager = LinearLayoutManager(this@EscolasActivity)
-                        adapter = SchoolAdapter(response.body()!!) { school ->
-                            // Handle school click
-                            val intent = Intent(this@EscolasActivity, CursosActivity::class.java)
-                            intent.putExtra("SCHOOL_ID", school.id)
-                            startActivity(intent)
-                        }
+                        adapter = SchoolAdapter(response.body()!!)
                     }
                 }
             }

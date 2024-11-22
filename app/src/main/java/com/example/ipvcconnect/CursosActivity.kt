@@ -53,12 +53,6 @@ class CursosActivity : AppCompatActivity() {
                         layoutManager = LinearLayoutManager(this@CursosActivity)
                         adapter = CourseAdapter(response.body()!!)
                     }
-                } else {
-                    Toast.makeText(
-                        this@CursosActivity,
-                        "Error loading courses",
-                        Toast.LENGTH_SHORT
-                    ).show()
                 }
             }
 

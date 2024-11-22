@@ -1,18 +1,17 @@
 package com.example.ipvcconnect.adapter
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.ipvcconnect.CursosActivity
 import com.example.ipvcconnect.R
 import com.example.ipvcconnect.models.School
 
 class SchoolAdapter(
-    private val schoolList: List<School>,
-    private val onItemClick: (School) -> Unit
-) : RecyclerView.Adapter<SchoolAdapter.SchoolViewHolder>() {
+    private val schoolList: List<School>) : RecyclerView.Adapter<SchoolAdapter.SchoolViewHolder>() {
 
     // Define o ViewHolder para a RecyclerView
     class SchoolViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
@@ -36,7 +35,10 @@ class SchoolAdapter(
         
         // Set click listener for the entire item
         holder.itemView.setOnClickListener {
-            onItemClick(school)
+            // Handle school click
+            val intent = Intent(holder.itemView.context, CursosActivity::class.java)
+            intent.putExtra("SCHOOL_ID", school.id)
+            holder.itemView.context.startActivity(intent)
         }
     }
 

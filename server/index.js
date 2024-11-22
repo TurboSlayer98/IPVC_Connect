@@ -41,7 +41,7 @@ app.get('/schools', async (req, res) => {
 app.get('/schools/:id', async (req, res) => {
     try {
         const { id } = req.params;
-        const result = await pool.query('SELECT * FROM schools WHERE id = $1', [id]);
+        const result = await pool.query('SELECT * FROM public.schools WHERE id = $1', [id]);
         if (result.rows.length === 0) {
             return res.status(404).json({ message: 'School not found' });
         }
@@ -54,7 +54,7 @@ app.get('/schools/:id', async (req, res) => {
 // Courses endpoints
 app.get('/courses', async (req, res) => {
     try {
-        const result = await pool.query('SELECT * FROM courses');
+        const result = await pool.query('SELECT * FROM public.courses');
         res.json(result.rows);
     } catch (err) {
         res.status(500).json({ error: err.message });
@@ -64,7 +64,7 @@ app.get('/courses', async (req, res) => {
 app.get('/courses/:id', async (req, res) => {
     try {
         const { id } = req.params;
-        const result = await pool.query('SELECT * FROM courses WHERE id = $1', [id]);
+        const result = await pool.query('SELECT * FROM public.courses WHERE id = $1', [id]);
         if (result.rows.length === 0) {
             return res.status(404).json({ message: 'Course not found' });
         }
@@ -77,7 +77,7 @@ app.get('/courses/:id', async (req, res) => {
 // Companies endpoints
 app.get('/companies', async (req, res) => {
     try {
-        const result = await pool.query('SELECT * FROM companies');
+        const result = await pool.query('SELECT * FROM public.companies');
         res.json(result.rows);
     } catch (err) {
         res.status(500).json({ error: err.message });
@@ -87,7 +87,7 @@ app.get('/companies', async (req, res) => {
 app.get('/companies/:id', async (req, res) => {
     try {
         const { id } = req.params;
-        const result = await pool.query('SELECT * FROM companies WHERE id = $1', [id]);
+        const result = await pool.query('SELECT * FROM public.companies WHERE id = $1', [id]);
         if (result.rows.length === 0) {
             return res.status(404).json({ message: 'Company not found' });
         }
@@ -101,7 +101,7 @@ app.get('/companies/:id', async (req, res) => {
 app.get('/companies/:companyId/comments', async (req, res) => {
     try {
         const { companyId } = req.params;
-        const result = await pool.query('SELECT * FROM comments WHERE company_id = $1', [companyId]);
+        const result = await pool.query('SELECT * FROM public.comments WHERE company_id = $1', [companyId]);
         res.json(result.rows);
     } catch (err) {
         res.status(500).json({ error: err.message });
@@ -113,7 +113,7 @@ app.post('/companies/:companyId/comments', async (req, res) => {
         const { companyId } = req.params;
         const { text } = req.body;
         const result = await pool.query(
-            'INSERT INTO comments (company_id, text, created_at) VALUES ($1, $2, NOW()) RETURNING *',
+            'INSERT INTO public.comments (company_id, text, created_at) VALUES ($1, $2, NOW()) RETURNING *',
             [companyId, text]
         );
         res.status(201).json(result.rows[0]);
@@ -126,7 +126,7 @@ app.post('/companies/:companyId/comments', async (req, res) => {
 app.get('/schools/:id/courses', async (req, res) => {
     try {
         const { id } = req.params;
-        const result = await pool.query('SELECT * FROM courses WHERE school_id = $1', [id]);
+        const result = await pool.query('SELECT * FROM public.courses WHERE school_id = $1', [id]);
         res.json(result.rows);
     } catch (err) {
         res.status(500).json({ error: err.message });
