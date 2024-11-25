@@ -216,7 +216,9 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:hint="Adicionar comentário"
-                        android:padding="8dp" />
+                        android:padding="8dp"
+                        android:imeOptions="actionDone"
+                        android:inputType="text"/>
 
                     <Button
                         android:id="@+id/enviarComentario"

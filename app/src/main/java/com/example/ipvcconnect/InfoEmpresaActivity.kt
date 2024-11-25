@@ -3,6 +3,8 @@ package com.example.ipvcconnect
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.view.KeyEvent
+import android.view.inputmethod.EditorInfo
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
@@ -25,7 +27,7 @@ import java.util.Locale
 
 class InfoEmpresaActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var mMap: GoogleMap
-    private lateinit var comentarios: MutableList<Comentario>
+    private val comentarios = mutableListOf<Comentario>()
     private lateinit var adapter: ComentariosAdapter
     private lateinit var empresaLatLng: LatLng
 
@@ -63,23 +65,47 @@ class InfoEmpresaActivity : AppCompatActivity(), OnMapReadyCallback {
             .findFragmentById(R.id.miniMapa) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
-        // Configurar RecyclerView de comentários
-        comentarios = mutableListOf()
+        // Configurar RecyclerView para comentários
         adapter = ComentariosAdapter(comentarios)
         val recyclerView = findViewById<RecyclerView>(R.id.comentariosRecyclerView)
-        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.layoutManager = LinearLayoutManager(this).apply {
+            reverseLayout = true
+            stackFromEnd = true
+        }
         recyclerView.adapter = adapter
 
-        // Botão de enviar comentário
+        val comentarioInput = findViewById<EditText>(R.id.comentarioInput)
+        
+        // Adicionar listener para o Enter
+        comentarioInput.setOnEditorActionListener { _, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_DONE ||
+                (event != null && event.keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_DOWN)) {
+                
+                val texto = comentarioInput.text.toString()
+                if (texto.isNotEmpty()) {
+                    val data = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault()).format(Date())
+                    val comentario = Comentario("Comentário Anônimo", texto, data)
+                    comentarios.add(0, comentario)
+                    adapter.notifyItemInserted(0)
+                    comentarioInput.text.clear()
+                    recyclerView.scrollToPosition(0)
+                }
+                true
+            } else {
+                false
+            }
+        }
+
+        // Botão de enviar comentário (mantido para quem preferir clicar no botão)
         findViewById<Button>(R.id.enviarComentario).setOnClickListener {
-            val comentarioInput = findViewById<EditText>(R.id.comentarioInput)
             val texto = comentarioInput.text.toString()
             if (texto.isNotEmpty()) {
                 val data = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault()).format(Date())
                 val comentario = Comentario("Comentário Anônimo", texto, data)
-                comentarios.add(comentario)
-                adapter.notifyItemInserted(comentarios.size - 1)
+                comentarios.add(0, comentario)
+                adapter.notifyItemInserted(0)
                 comentarioInput.text.clear()
+                recyclerView.scrollToPosition(0)
             }
         }
 
