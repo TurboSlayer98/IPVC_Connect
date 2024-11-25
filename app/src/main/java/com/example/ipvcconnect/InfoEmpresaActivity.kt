@@ -97,6 +97,14 @@ class InfoEmpresaActivity : AppCompatActivity(), OnMapReadyCallback {
             }
             startActivity(intent)
         }
+
+        val empresaSite = intent.getStringExtra("EMPRESA_SITE") ?: ""
+        findViewById<TextView>(R.id.empresaSite).text = "Site: $empresaSite"
+
+        findViewById<Button>(R.id.buttonSite).setOnClickListener {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(empresaSite))
+            startActivity(intent)
+        }
     }
 
     override fun onMapReady(googleMap: GoogleMap) {

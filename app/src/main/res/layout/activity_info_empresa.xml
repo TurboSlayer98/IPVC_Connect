@@ -80,6 +80,14 @@
                     android:drawablePadding="8dp"
                     android:textSize="16sp" />
 
+                <TextView
+                    android:id="@+id/empresaSite"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    android:drawablePadding="8dp"
+                    android:textSize="16sp" />
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
@@ -101,6 +109,14 @@
                         android:layout_marginStart="8dp"
                         android:layout_weight="1"
                         android:text="Email" />
+
+                    <Button
+                        android:id="@+id/buttonSite"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="8dp"
+                        android:layout_weight="1"
+                        android:text="Site" />
                 </LinearLayout>
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
