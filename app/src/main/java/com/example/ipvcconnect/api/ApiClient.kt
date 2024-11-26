@@ -5,7 +5,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 object ApiClient {
-    private const val BASE_URL = "https://ivvpzpqmkofpeznhjnym.supabase.co"
+    private const val BASE_URL = "https://ipvconnect.vercel.app/"
 
     private val client = OkHttpClient.Builder()
         .build()
