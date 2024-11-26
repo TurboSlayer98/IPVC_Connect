@@ -1,6 +1,7 @@
 package com.example.ipvcconnect
 
 import android.os.Bundle
+import android.widget.ImageButton
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -27,6 +28,15 @@ class EscolasActivity : AppCompatActivity() {
             insets
         }
 
+        // Set up back button
+        findViewById<ImageButton>(R.id.button1).setOnClickListener {
+            finish()
+        }
+
+        loadSchools()
+    }
+
+    private fun loadSchools() {
         val request = ApiClient.buildService(ApiService::class.java)
         val call = request.getAllSchools()
 

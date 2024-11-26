@@ -38,9 +38,13 @@ class CursosActivity : AppCompatActivity() {
 
         // Set up back button
         findViewById<ImageButton>(R.id.button1).setOnClickListener {
-            onBackPressed()
+            finish()
         }
 
+        loadCourses(schoolId)
+    }
+
+    private fun loadCourses(schoolId: Int) {
         val request = ApiClient.buildService(ApiService::class.java)
         val call = request.getCoursesBySchool(schoolId)
 

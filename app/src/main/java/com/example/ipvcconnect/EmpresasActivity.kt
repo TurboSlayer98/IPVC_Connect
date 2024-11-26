@@ -38,9 +38,13 @@ class EmpresasActivity : AppCompatActivity() {
 
         // Set up back button
         findViewById<ImageButton>(R.id.button1).setOnClickListener {
-            onBackPressed()
+            finish()
         }
 
+        loadCompanies(courseId)
+    }
+
+    private fun loadCompanies(courseId: Int) {
         val request = ApiClient.buildService(ApiService::class.java)
         val call = request.getCompaniesByCourse(courseId)
 
@@ -55,7 +59,6 @@ class EmpresasActivity : AppCompatActivity() {
                     }
                 }
             }
-
             override fun onFailure(call: Call<List<Course>>, t: Throwable) {
                 Toast.makeText(
                     this@EmpresasActivity,
