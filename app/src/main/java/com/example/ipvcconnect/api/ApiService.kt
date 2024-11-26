@@ -1,6 +1,7 @@
 package com.example.ipvcconnect.api
 
 import com.example.ipvcconnect.models.Comment
+import com.example.ipvcconnect.models.Company
 import com.example.ipvcconnect.models.Course
 import com.example.ipvcconnect.models.Course_Company
 import com.example.ipvcconnect.models.School
@@ -17,7 +18,7 @@ interface ApiService {
     fun getCoursesBySchool(@Path("id") id: Int): Call<List<Course>>
 
     @GET("courses/{id}/companies")
-    fun getCompaniesByCourse(@Path("id") courseId: Int): Call<List<Course_Company>>
+    fun getCompaniesByCourse(@Path("id") courseId: Int): Call<List<Company>>
 
     // Comments endpoints
     @GET("companies/{companyId}/comments")

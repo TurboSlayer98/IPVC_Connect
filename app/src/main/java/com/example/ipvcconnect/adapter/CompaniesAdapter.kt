@@ -12,8 +12,8 @@ class CompaniesAdapter(private val companiesList: List<Company>) : RecyclerView.
 
     // Define o ViewHolder para a RecyclerView
     class CompaniesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        //val companiesName: TextView = itemView.findViewById(R.id.schoolName)
-        //val companiesDescription: TextView = itemView.findViewById(R.id.schoolDescription)
+        val companiesName: TextView = itemView.findViewById(R.id.cardTitle1)
+        val companiesDescription: TextView = itemView.findViewById(R.id.cardTitle2)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CompaniesViewHolder {
@@ -26,8 +26,8 @@ class CompaniesAdapter(private val companiesList: List<Company>) : RecyclerView.
         // Vincula os dados do usuário aos elementos da UI no ViewHolder
         val companies = companiesList[position]
         //holder.companiesLogo
-        //holder.companiesName.text = companies.name
-        //holder.companiesDescription.text = companies.description
+        holder.companiesName.text = companies.name
+        holder.companiesDescription.text = companies.description
     }
 
     override fun getItemCount(): Int {
