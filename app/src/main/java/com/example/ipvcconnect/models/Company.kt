@@ -5,9 +5,12 @@ data class Company(
     val name: String,
     val address: String,
     val description: String,
-    val placements: Int,
+    val placements_available: Int,
+    val placements_ocupied: Int,
     val phone: String,
     val email: String,
-    val imageUrl: String,
-    val comments: List<Comment> = emptyList()
+    val website: String,
+    val latitude: Double,
+    val longitude: Double,
+    val comments: List<Comment>
 ) 

@@ -10,7 +10,7 @@ import retrofit2.http.*
 
 interface ApiService {
     // Schools endpoints
-    @GET("schools")
+    @GET("/schools")
     fun getAllSchools(): Call<List<School>>
 
 //    @GET("schools/{id}")
