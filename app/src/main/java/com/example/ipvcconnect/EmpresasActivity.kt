@@ -10,12 +10,9 @@ import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ipvcconnect.adapter.CompaniesAdapter
-import com.example.ipvcconnect.adapter.CourseAdapter
 import com.example.ipvcconnect.api.ApiClient
 import com.example.ipvcconnect.api.ApiService
 import com.example.ipvcconnect.models.Company
-import com.example.ipvcconnect.models.Course
-import com.example.ipvcconnect.models.Course_Company
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
