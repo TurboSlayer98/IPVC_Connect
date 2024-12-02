@@ -1,10 +1,13 @@
 package com.example.ipvcconnect.adapter
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.ipvcconnect.EmpresasActivity
+import com.example.ipvcconnect.InfoEmpresa
 import com.example.ipvcconnect.R
 import com.example.ipvcconnect.models.Company
 
@@ -28,6 +31,14 @@ class CompaniesAdapter(private val companiesList: List<Company>) : RecyclerView.
         //holder.companiesLogo
         holder.companiesName.text = companies.name
         holder.companiesDescription.text = companies.description
+
+        // Set click listener for the entire item
+        holder.itemView.setOnClickListener {
+            // Handle school click
+            val intent = Intent(holder.itemView.context, InfoEmpresa::class.java)
+            intent.putExtra("COMPANY_ID", companies.id)
+            holder.itemView.context.startActivity(intent)
+        }
     }
 
     override fun getItemCount(): Int {

@@ -20,6 +20,9 @@ interface ApiService {
     @GET("courses/{id}/companies")
     fun getCompaniesByCourse(@Path("id") courseId: Int): Call<List<Company>>
 
+    @GET("companies/{id}")
+    fun getCompany(@Path("id") companyId: Int): Call<Company>
+
     // Comments endpoints
     @GET("companies/{companyId}/comments")
     fun getCompanyComments(@Path("companyId") companyId: Int): Call<List<Comment>>
