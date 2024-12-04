@@ -8,6 +8,7 @@ data class Empresa(
     val morada: String,
     val telefone: String,
     val email: String,
+    val site: String,
     val vagasDisponiveis: Int,
     val vagasOcupadas: Int,
     val latitude: Double,

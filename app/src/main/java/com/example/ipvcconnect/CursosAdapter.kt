@@ -1,6 +1,5 @@
 package com.example.ipvcconnect
 
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -27,9 +26,9 @@ class CursosAdapter(private val cursos: List<Curso>) :
         holder.descricao.text = curso.descricao
 
         holder.itemView.setOnClickListener {
-            val intent = Intent(holder.itemView.context, EmpresasActivity::class.java)
-            intent.putExtra("CURSO_NOME", curso.nome)
-            holder.itemView.context.startActivity(intent)
+            curso.intent?.let { intent ->
+                holder.itemView.context.startActivity(intent)
+            }
         }
     }
 

@@ -2,7 +2,9 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
     <application
         android:allowBackup="true"
@@ -14,13 +16,25 @@
         android:supportsRtl="true"
         android:theme="@style/IPVCConnect"
         tools:targetApi="31">
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyDM_Sl8k-XJPh6uMW3WrKax-_s2zw6mxNo" />
+
         <activity
+            android:name=".MapsActivity"
+            android:exported="false" />
+        <activity
+            android:name=".InfoEmpresaActivity"
             android:exported="false" />
         <activity
             android:name=".EmpresasActivity"
             android:exported="false" />
         <activity
             android:name=".CursosActivity"
+            android:exported="false" />
+        <activity
+            android:name=".EscolasActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"
@@ -31,9 +45,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity
-            android:name=".EscolasActivity"
-            android:exported="false" />
+
     </application>
 
 </manifest>

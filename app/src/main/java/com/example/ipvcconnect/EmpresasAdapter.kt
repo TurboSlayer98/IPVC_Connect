@@ -40,6 +40,7 @@ class EmpresasAdapter(private val empresas: List<Empresa>) :
             intent.putExtra("EMPRESA_LNG", empresa.longitude)
             intent.putExtra("VAGAS_DISPONIVEIS", empresa.vagasDisponiveis)
             intent.putExtra("VAGAS_OCUPADAS", empresa.vagasOcupadas)
+            intent.putExtra("EMPRESA_SITE", empresa.site)
             holder.itemView.context.startActivity(intent)
         }
     }

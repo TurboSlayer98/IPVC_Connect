@@ -3,6 +3,8 @@ package com.example.ipvcconnect
 import android.content.Intent
 import android.net.Uri
 import android.os.Bundle
+import android.view.KeyEvent
+import android.view.inputmethod.EditorInfo
 import android.widget.Button
 import android.widget.EditText
 import android.widget.ImageButton
@@ -22,20 +24,12 @@ import com.google.android.gms.maps.model.MarkerOptions
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
-import android.Manifest
-import android.content.pm.PackageManager
-import androidx.core.app.ActivityCompat
-import androidx.core.content.ContextCompat
 
 class InfoEmpresaActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var mMap: GoogleMap
-    private lateinit var comentarios: MutableList<Comentario>
+    private val comentarios = mutableListOf<Comentario>()
     private lateinit var adapter: ComentariosAdapter
     private lateinit var empresaLatLng: LatLng
-
-    companion object {
-        private const val PERMISSION_REQUEST_CALL_PHONE = 1
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -71,71 +65,71 @@ class InfoEmpresaActivity : AppCompatActivity(), OnMapReadyCallback {
             .findFragmentById(R.id.miniMapa) as SupportMapFragment
         mapFragment.getMapAsync(this)
 
-        // Configurar RecyclerView de comentários
-        comentarios = mutableListOf()
+        // Configurar RecyclerView para comentários
         adapter = ComentariosAdapter(comentarios)
         val recyclerView = findViewById<RecyclerView>(R.id.comentariosRecyclerView)
-        recyclerView.layoutManager = LinearLayoutManager(this)
+        recyclerView.layoutManager = LinearLayoutManager(this).apply {
+            reverseLayout = true
+            stackFromEnd = true
+        }
         recyclerView.adapter = adapter
 
-        // Botão de enviar comentário
+        val comentarioInput = findViewById<EditText>(R.id.comentarioInput)
+        
+        // Adicionar listener para o Enter
+        comentarioInput.setOnEditorActionListener { _, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_DONE ||
+                (event != null && event.keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_DOWN)) {
+                
+                val texto = comentarioInput.text.toString()
+                if (texto.isNotEmpty()) {
+                    val data = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault()).format(Date())
+                    val comentario = Comentario("Comentário Anônimo", texto, data)
+                    comentarios.add(0, comentario)
+                    adapter.notifyItemInserted(0)
+                    comentarioInput.text.clear()
+                    recyclerView.scrollToPosition(0)
+                }
+                true
+            } else {
+                false
+            }
+        }
+
+        // Botão de enviar comentário (mantido para quem preferir clicar no botão)
         findViewById<Button>(R.id.enviarComentario).setOnClickListener {
-            val comentarioInput = findViewById<EditText>(R.id.comentarioInput)
             val texto = comentarioInput.text.toString()
             if (texto.isNotEmpty()) {
                 val data = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault()).format(Date())
                 val comentario = Comentario("Comentário Anônimo", texto, data)
-                comentarios.add(comentario)
-                adapter.notifyItemInserted(comentarios.size - 1)
+                comentarios.add(0, comentario)
+                adapter.notifyItemInserted(0)
                 comentarioInput.text.clear()
+                recyclerView.scrollToPosition(0)
             }
         }
 
         // Botões de contato
         findViewById<Button>(R.id.buttonLigar).setOnClickListener {
-            if (ContextCompat.checkSelfPermission(this, Manifest.permission.CALL_PHONE)
-                != PackageManager.PERMISSION_GRANTED) {
-                ActivityCompat.requestPermissions(this,
-                    arrayOf(Manifest.permission.CALL_PHONE),
-                    PERMISSION_REQUEST_CALL_PHONE)
-            } else {
-                realizarChamada(empresaTelefone)
+            val intent = Intent(Intent.ACTION_DIAL).apply {
+                data = Uri.parse("tel:$empresaTelefone")
             }
+            startActivity(intent)
         }
 
         findViewById<Button>(R.id.buttonEmail).setOnClickListener {
-            enviarEmail(empresaEmail)
-        }
-    }
-
-    private fun realizarChamada(telefone: String) {
-        val intent = Intent(Intent.ACTION_DIAL).apply {
-            data = Uri.parse("tel:$telefone")
-        }
-        startActivity(intent)
-    }
-
-    private fun enviarEmail(email: String) {
-        val intent = Intent(Intent.ACTION_SENDTO).apply {
-            data = Uri.parse("mailto:$email")
-        }
-        startActivity(intent)
-    }
-
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String>,
-        grantResults: IntArray
-    ) {
-        super.onRequestPermissionsResult(requestCode, permissions, grantResults)
-        when (requestCode) {
-            PERMISSION_REQUEST_CALL_PHONE -> {
-                if ((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
-                    val empresaTelefone = intent.getStringExtra("EMPRESA_TELEFONE") ?: ""
-                    realizarChamada(empresaTelefone)
-                }
-                return
+            val intent = Intent(Intent.ACTION_SENDTO).apply {
+                data = Uri.parse("mailto:$empresaEmail")
             }
+            startActivity(intent)
+        }
+
+        val empresaSite = intent.getStringExtra("EMPRESA_SITE") ?: ""
+        findViewById<TextView>(R.id.empresaSite).text = "Site: $empresaSite"
+
+        findViewById<Button>(R.id.buttonSite).setOnClickListener {
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(empresaSite))
+            startActivity(intent)
         }
     }
 
