@@ -25,16 +25,16 @@
             android:name=".MapsActivity"
             android:exported="false" />
         <activity
-            android:name=".InfoEmpresaActivity"
+            android:name=".CompaniesInfoActivity"
             android:exported="false" />
         <activity
-            android:name=".EmpresasActivity"
+            android:name=".CompaniesActivity"
             android:exported="false" />
         <activity
-            android:name=".CursosActivity"
+            android:name=".CoursesActivity"
             android:exported="false" />
         <activity
-            android:name=".EscolasActivity"
+            android:name=".SchoolsActivity"
             android:exported="false" />
         <activity
             android:name=".MainActivity"

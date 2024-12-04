@@ -6,7 +6,7 @@
     android:id="@+id/cursos_activity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CursosActivity"
+    tools:context=".CoursesActivity"
     android:background="@color/md_theme_background">
 
     <RelativeLayout
@@ -21,7 +21,7 @@
             android:layout_centerVertical="true"
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
-            android:src="@drawable/arrow_back_40"
+            android:src="@drawable/ic_arrow_back"
             android:background="?android:attr/selectableItemBackgroundBorderless"/>
 
         <TextView

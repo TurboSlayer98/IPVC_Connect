@@ -1,18 +1,20 @@
-package com.example.ipvcconnect
+package com.example.ipvcconnect.adapter
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.ipvcconnect.R
+import com.example.ipvcconnect.models.Comment
 
-class ComentariosAdapter(private val comentarios: List<Comentario>) : 
-    RecyclerView.Adapter<ComentariosAdapter.ComentarioViewHolder>() {
+class CommentsAdapter(private val comentarios: List<Comment>) :
+    RecyclerView.Adapter<CommentsAdapter.ComentarioViewHolder>() {
 
     class ComentarioViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val usuario: TextView = itemView.findViewById(R.id.comentarioUsuario)
-        val texto: TextView = itemView.findViewById(R.id.comentarioTexto)
-        val data: TextView = itemView.findViewById(R.id.comentarioData)
+        val user: TextView = itemView.findViewById(R.id.comentarioUsuario)
+        val text: TextView = itemView.findViewById(R.id.comentarioTexto)
+        val date: TextView = itemView.findViewById(R.id.comentarioData)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ComentarioViewHolder {
@@ -23,9 +25,9 @@ class ComentariosAdapter(private val comentarios: List<Comentario>) :
 
     override fun onBindViewHolder(holder: ComentarioViewHolder, position: Int) {
         val comentario = comentarios[position]
-        holder.usuario.text = comentario.usuario
-        holder.texto.text = comentario.texto
-        holder.data.text = comentario.data
+        holder.user.text = comentario.user
+        holder.text.text = comentario.text
+        holder.date.text = comentario.date
     }
 
     override fun getItemCount() = comentarios.size

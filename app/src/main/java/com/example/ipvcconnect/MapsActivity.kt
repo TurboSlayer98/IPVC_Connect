@@ -158,34 +158,34 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             mMap.uiSettings.isMyLocationButtonEnabled = true
         }
 
-        EmpresasData.todasEmpresas.forEach { empresa ->
-            val marker = mMap.addMarker(
-                MarkerOptions()
-                    .position(LatLng(empresa.latitude, empresa.longitude))
-                    .title(empresa.nome)
-                    .snippet("${empresa.descricao} - ${empresa.curso}")
-            )
-            marker?.tag = empresa
-        }
+//        EmpresasData.todasEmpresas.forEach { empresa ->
+//            val marker = mMap.addMarker(
+//                MarkerOptions()
+//                    .position(LatLng(empresa.latitude, empresa.longitude))
+//                    .title(empresa.nome)
+//                    .snippet("${empresa.descricao} - ${empresa.curso}")
+//            )
+//            marker?.tag = empresa
+//        }
 
-        mMap.setOnInfoWindowClickListener { marker ->
-            val empresa = marker.tag as? Empresa
-            if (empresa != null) {
-                val intent = Intent(this, InfoEmpresaActivity::class.java)
-                intent.putExtra("EMPRESA_NOME", empresa.nome)
-                intent.putExtra("EMPRESA_MORADA", empresa.morada)
-                intent.putExtra("EMPRESA_TELEFONE", empresa.telefone)
-                intent.putExtra("EMPRESA_EMAIL", empresa.email)
-                intent.putExtra("EMPRESA_LAT", empresa.latitude)
-                intent.putExtra("EMPRESA_LNG", empresa.longitude)
-                intent.putExtra("VAGAS_DISPONIVEIS", empresa.vagasDisponiveis)
-                intent.putExtra("VAGAS_OCUPADAS", empresa.vagasOcupadas)
-                startActivity(intent)
-            }
-        }
-
-        val vianaDoCastelo = LatLng(41.6946, -8.8362)
-        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(vianaDoCastelo, currentZoom))
+//        mMap.setOnInfoWindowClickListener { marker ->
+//            val empresa = marker.tag as? Empresa
+//            if (empresa != null) {
+//                val intent = Intent(this, CompaniesInfoActivity::class.java)
+//                intent.putExtra("EMPRESA_NOME", empresa.nome)
+//                intent.putExtra("EMPRESA_MORADA", empresa.morada)
+//                intent.putExtra("EMPRESA_TELEFONE", empresa.telefone)
+//                intent.putExtra("EMPRESA_EMAIL", empresa.email)
+//                intent.putExtra("EMPRESA_LAT", empresa.latitude)
+//                intent.putExtra("EMPRESA_LNG", empresa.longitude)
+//                intent.putExtra("VAGAS_DISPONIVEIS", empresa.vagasDisponiveis)
+//                intent.putExtra("VAGAS_OCUPADAS", empresa.vagasOcupadas)
+//                startActivity(intent)
+//            }
+//        }
+//
+//        val vianaDoCastelo = LatLng(41.6946, -8.8362)
+//        mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(vianaDoCastelo, currentZoom))
 
         mMap.uiSettings.isZoomControlsEnabled = true
     }

@@ -1,20 +1,27 @@
 package com.example.ipvcconnect
 
+import android.os.Bundle
+import androidx.activity.enableEdgeToEdge
+import androidx.appcompat.app.AppCompatActivity
+import android.widget.ImageButton
+import android.widget.TextView
+import android.widget.Toast
+import com.example.ipvcconnect.api.ApiClient
+import com.example.ipvcconnect.api.ApiService
+import com.example.ipvcconnect.models.Company
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import android.content.Intent
 import android.net.Uri
-import android.os.Bundle
 import android.view.KeyEvent
 import android.view.inputmethod.EditorInfo
 import android.widget.Button
 import android.widget.EditText
-import android.widget.ImageButton
-import android.widget.TextView
-import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.ipvcconnect.adapter.CommentsAdapter
+import com.example.ipvcconnect.models.Comment
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -25,10 +32,11 @@ import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
 
-class InfoEmpresaActivity : AppCompatActivity(), OnMapReadyCallback {
+class CompaniesInfoActivity : AppCompatActivity(), OnMapReadyCallback {
+
     private lateinit var mMap: GoogleMap
-    private val comentarios = mutableListOf<Comentario>()
-    private lateinit var adapter: ComentariosAdapter
+    private val comentarios = mutableListOf<Comment>()
+    private lateinit var adapter: CommentsAdapter
     private lateinit var empresaLatLng: LatLng
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,26 +44,19 @@ class InfoEmpresaActivity : AppCompatActivity(), OnMapReadyCallback {
         enableEdgeToEdge()
         setContentView(R.layout.activity_info_empresa)
 
-        // Receber dados da empresa
-        val empresaNome = intent.getStringExtra("EMPRESA_NOME") ?: "Empresa"
-        val empresaMorada = intent.getStringExtra("EMPRESA_MORADA") ?: ""
-        val empresaTelefone = intent.getStringExtra("EMPRESA_TELEFONE") ?: ""
-        val empresaEmail = intent.getStringExtra("EMPRESA_EMAIL") ?: ""
-        val empresaLat = intent.getDoubleExtra("EMPRESA_LAT", 0.0)
-        val empresaLng = intent.getDoubleExtra("EMPRESA_LNG", 0.0)
-        val vagasDisponiveis = intent.getIntExtra("VAGAS_DISPONIVEIS", 0)
-        val vagasOcupadas = intent.getIntExtra("VAGAS_OCUPADAS", 0)
-        empresaLatLng = LatLng(empresaLat, empresaLng)
+        // Get course ID from intent and coordinates
+        val companyId = intent.getIntExtra("COMPANY_ID", -1)
+        empresaLatLng = LatLng(intent.getDoubleExtra("EMPRESA_LAT", 0.0), intent.getDoubleExtra("EMPRESA_LNG", 0.0))
+        val companyPhone = intent.getIntExtra("COMPANY_PHONE", -1)
+        val companyEmail = intent.getStringExtra("COMPANY_EMAIL")
+        val companyWeb = intent.getStringExtra("COMPANY_WEB")
+        if (companyId == -1) {
+            Toast.makeText(this, "Error: Company not found", Toast.LENGTH_SHORT).show()
+            finish()
+            return
+        }
 
-        // Configurar views
-        findViewById<TextView>(R.id.empresaNome).text = empresaNome
-        findViewById<TextView>(R.id.empresaMorada).text = "Morada: $empresaMorada"
-        findViewById<TextView>(R.id.empresaTelefone).text = "Telefone: $empresaTelefone"
-        findViewById<TextView>(R.id.empresaEmail).text = "Email: $empresaEmail"
-        findViewById<TextView>(R.id.vagasDisponiveis).text = "Vagas Disponíveis: $vagasDisponiveis"
-        findViewById<TextView>(R.id.vagasOcupadas).text = "Vagas Ocupadas: $vagasOcupadas"
-
-        // Botão de voltar
+        // Set up back button
         findViewById<ImageButton>(R.id.button1).setOnClickListener {
             finish()
         }
@@ -66,7 +67,7 @@ class InfoEmpresaActivity : AppCompatActivity(), OnMapReadyCallback {
         mapFragment.getMapAsync(this)
 
         // Configurar RecyclerView para comentários
-        adapter = ComentariosAdapter(comentarios)
+        adapter = CommentsAdapter(comentarios)
         val recyclerView = findViewById<RecyclerView>(R.id.comentariosRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this).apply {
             reverseLayout = true
@@ -75,16 +76,16 @@ class InfoEmpresaActivity : AppCompatActivity(), OnMapReadyCallback {
         recyclerView.adapter = adapter
 
         val comentarioInput = findViewById<EditText>(R.id.comentarioInput)
-        
+
         // Adicionar listener para o Enter
         comentarioInput.setOnEditorActionListener { _, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_DONE ||
                 (event != null && event.keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_DOWN)) {
-                
+
                 val texto = comentarioInput.text.toString()
                 if (texto.isNotEmpty()) {
                     val data = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault()).format(Date())
-                    val comentario = Comentario("Comentário Anônimo", texto, data)
+                    val comentario = Comment("Comentário Anônimo", texto, data)
                     comentarios.add(0, comentario)
                     adapter.notifyItemInserted(0)
                     comentarioInput.text.clear()
@@ -101,7 +102,7 @@ class InfoEmpresaActivity : AppCompatActivity(), OnMapReadyCallback {
             val texto = comentarioInput.text.toString()
             if (texto.isNotEmpty()) {
                 val data = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault()).format(Date())
-                val comentario = Comentario("Comentário Anônimo", texto, data)
+                val comentario = Comment("Comentário Anônimo", texto, data)
                 comentarios.add(0, comentario)
                 adapter.notifyItemInserted(0)
                 comentarioInput.text.clear()
@@ -112,30 +113,56 @@ class InfoEmpresaActivity : AppCompatActivity(), OnMapReadyCallback {
         // Botões de contato
         findViewById<Button>(R.id.buttonLigar).setOnClickListener {
             val intent = Intent(Intent.ACTION_DIAL).apply {
-                data = Uri.parse("tel:$empresaTelefone")
+                data = Uri.parse("tel:${companyPhone}")
             }
             startActivity(intent)
         }
 
         findViewById<Button>(R.id.buttonEmail).setOnClickListener {
             val intent = Intent(Intent.ACTION_SENDTO).apply {
-                data = Uri.parse("mailto:$empresaEmail")
+                data = Uri.parse("mailto:${companyEmail}")
             }
             startActivity(intent)
         }
 
-        val empresaSite = intent.getStringExtra("EMPRESA_SITE") ?: ""
-        findViewById<TextView>(R.id.empresaSite).text = "Site: $empresaSite"
-
         findViewById<Button>(R.id.buttonSite).setOnClickListener {
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(empresaSite))
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(companyWeb))
             startActivity(intent)
         }
+
+        loadCompany(companyId)
+    }
+
+    private fun loadCompany(companyId: Int) {
+        val request = ApiClient.buildService(ApiService::class.java)
+        val call = request.getCompany(companyId)
+
+        call.enqueue(object : Callback<Company> {
+            override fun onResponse(call: Call<Company>, response: Response<Company>) {
+                if (response.isSuccessful) {
+                    val company: Company = response.body()!!
+                    findViewById<TextView>(R.id.empresaNome).text = company.name
+                    findViewById<TextView>(R.id.empresaMorada).text = company.address
+                    findViewById<TextView>(R.id.empresaTelefone).text = company.phone
+                    findViewById<TextView>(R.id.empresaEmail).text = company.email
+                    findViewById<TextView>(R.id.empresaSite).text = company.website
+                    findViewById<TextView>(R.id.vagasDisponiveis).text = company.placements_available.toString()
+                    findViewById<TextView>(R.id.vagasOcupadas).text = company.placements_ocupied.toString()
+                }
+            }
+            override fun onFailure(call: Call<Company>, t: Throwable) {
+                Toast.makeText(
+                    this@CompaniesInfoActivity,
+                    "Something went wrong ${t.message}",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        })
     }
 
     override fun onMapReady(googleMap: GoogleMap) {
         mMap = googleMap
-        
+
         // Adicionar marcador da empresa
         mMap.addMarker(MarkerOptions().position(empresaLatLng))
         mMap.moveCamera(CameraUpdateFactory.newLatLngZoom(empresaLatLng, 15f))
@@ -148,4 +175,4 @@ class InfoEmpresaActivity : AppCompatActivity(), OnMapReadyCallback {
             startActivity(intent)
         }
     }
-} 
+}
