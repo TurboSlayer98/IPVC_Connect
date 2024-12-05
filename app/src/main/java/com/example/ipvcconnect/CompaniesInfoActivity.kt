@@ -1,7 +1,6 @@
 package com.example.ipvcconnect
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import android.widget.ImageButton
 import android.widget.TextView
@@ -18,9 +17,12 @@ import android.view.KeyEvent
 import android.view.inputmethod.EditorInfo
 import android.widget.Button
 import android.widget.EditText
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ipvcconnect.adapter.CommentsAdapter
+import com.example.ipvcconnect.dataaccessobjects.CommentsDao
+import com.example.ipvcconnect.database.AppDatabase
 import com.example.ipvcconnect.models.Comment
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
@@ -28,6 +30,9 @@ import com.google.android.gms.maps.OnMapReadyCallback
 import com.google.android.gms.maps.SupportMapFragment
 import com.google.android.gms.maps.model.LatLng
 import com.google.android.gms.maps.model.MarkerOptions
+import kotlinx.coroutines.Job
+import kotlinx.coroutines.flow.distinctUntilChanged
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -35,14 +40,19 @@ import java.util.Locale
 class CompaniesInfoActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
-    private val comentarios = mutableListOf<Comment>()
     private lateinit var adapter: CommentsAdapter
     private lateinit var empresaLatLng: LatLng
+    private lateinit var database: AppDatabase
+    private lateinit var commentDao: CommentsDao
+    private var commentsJob: Job? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        enableEdgeToEdge()
         setContentView(R.layout.activity_info_empresa)
+
+        // Inicializar banco de dados
+        database = AppDatabase.getDatabase(this)
+        commentDao = database.CommentsDao()
 
         // Get course ID from intent and coordinates
         val companyId = intent.getIntExtra("COMPANY_ID", -1)
@@ -67,7 +77,7 @@ class CompaniesInfoActivity : AppCompatActivity(), OnMapReadyCallback {
         mapFragment.getMapAsync(this)
 
         // Configurar RecyclerView para comentários
-        adapter = CommentsAdapter(comentarios)
+        adapter = CommentsAdapter()
         val recyclerView = findViewById<RecyclerView>(R.id.comentariosRecyclerView)
         recyclerView.layoutManager = LinearLayoutManager(this).apply {
             reverseLayout = true
@@ -75,21 +85,20 @@ class CompaniesInfoActivity : AppCompatActivity(), OnMapReadyCallback {
         }
         recyclerView.adapter = adapter
 
-        val comentarioInput = findViewById<EditText>(R.id.comentarioInput)
+        val commentInput = findViewById<EditText>(R.id.comentarioInput)
 
         // Adicionar listener para o Enter
-        comentarioInput.setOnEditorActionListener { _, actionId, event ->
+        commentInput.setOnEditorActionListener { _, actionId, event ->
             if (actionId == EditorInfo.IME_ACTION_DONE ||
                 (event != null && event.keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_DOWN)) {
-
-                val texto = comentarioInput.text.toString()
-                if (texto.isNotEmpty()) {
-                    val data = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault()).format(Date())
-                    val comentario = Comment("Comentário Anônimo", texto, data)
-                    comentarios.add(0, comentario)
-                    adapter.notifyItemInserted(0)
-                    comentarioInput.text.clear()
-                    recyclerView.scrollToPosition(0)
+                val text = commentInput.text.toString()
+                if (text.isNotEmpty()) {
+                    val date = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault()).format(Date())
+                    val comment = Comment(null,"Anonymous Comment", text, date, companyId)
+                    lifecycleScope.launch {
+                        commentDao.insertComment(comment)
+                        commentInput.text.clear()
+                    }
                 }
                 true
             } else {
@@ -99,15 +108,36 @@ class CompaniesInfoActivity : AppCompatActivity(), OnMapReadyCallback {
 
         // Botão de enviar comentário (mantido para quem preferir clicar no botão)
         findViewById<Button>(R.id.enviarComentario).setOnClickListener {
-            val texto = comentarioInput.text.toString()
-            if (texto.isNotEmpty()) {
-                val data = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault()).format(Date())
-                val comentario = Comment("Comentário Anônimo", texto, data)
-                comentarios.add(0, comentario)
-                adapter.notifyItemInserted(0)
-                comentarioInput.text.clear()
-                recyclerView.scrollToPosition(0)
+            val text = commentInput.text.toString()
+            if (text.isNotEmpty()) {
+                val date = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault()).format(Date())
+                val comment = Comment(null,"Anonymous Comment", text, date, companyId)
+                lifecycleScope.launch {
+                    commentDao.insertComment(comment)
+                    commentInput.text.clear()
+                }
             }
+        }
+
+        // Cancelar job anterior se existir
+        commentsJob?.cancel()
+
+        // Observar comentários em tempo real (em um único lifecycleScope)
+        commentsJob = lifecycleScope.launch {
+            // Usar distinctUntilChanged para evitar atualizações desnecessárias
+            commentDao.getCommentsByCompany(companyId)
+                .distinctUntilChanged()
+                .collect { comments ->
+                    val orderedList = comments
+                        .distinctBy { it.id } // Garantir que não há duplicatas
+                        .sortedByDescending { it.id }
+                    adapter.submitList(orderedList) {
+                        // Callback executado após a lista ser atualizada
+                        if (orderedList.isNotEmpty()) {
+                            recyclerView.smoothScrollToPosition(0)
+                        }
+                    }
+                }
         }
 
         // Botões de contato
@@ -174,5 +204,10 @@ class CompaniesInfoActivity : AppCompatActivity(), OnMapReadyCallback {
             intent.putExtra("EMPRESA_LNG", empresaLatLng.longitude)
             startActivity(intent)
         }
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        commentsJob?.cancel() // Cancelar a coleta quando a activity for destruída
     }
 }
