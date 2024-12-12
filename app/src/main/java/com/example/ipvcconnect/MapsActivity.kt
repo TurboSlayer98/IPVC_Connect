@@ -39,7 +39,6 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var fusedLocationClient: FusedLocationProviderClient
     private lateinit var locationRequest: LocationRequest
     private lateinit var locationCallback: LocationCallback
-
     private lateinit var companies: List<Company>
 
     companion object {
@@ -220,7 +219,8 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             val markerOptions = MarkerOptions()
                 .position(LatLng(company.latitude, company.longitude))
                 .title(company.name)
-                .snippet("${company.placements_available} - ${company.placements_ocupied}")
+                .snippet(company.description)
+                .snippet("Available: ${company.placements_available} | Ocupied: ${company.placements_ocupied}")
 
             val marker = mMap.addMarker(markerOptions)
             marker?.tag = company

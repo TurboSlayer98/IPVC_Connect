@@ -55,11 +55,6 @@ class CompaniesInfoActivity : AppCompatActivity(), OnMapReadyCallback {
 
         // Get course ID from intent and coordinates
         val companyId = intent.getIntExtra("COMPANY_ID", -1)
-        val companyName = intent.getStringExtra("COMPANY_NAME").toString()
-        val companyAddress = intent.getStringExtra("COMPANY_ADDRESS").toString()
-        val companyDescription = intent.getStringExtra("COMPANY_DESCRIPTION").toString()
-        val companyPlacements_available = intent.getIntExtra("COMPANY_AVAILABLE", -1)
-        val companyPlacements_ocupied = intent.getIntExtra("COMPANY_OCUPIED", -1)
         val companyPhone = intent.getStringExtra("COMPANY_PHONE").toString()
         val companyEmail = intent.getStringExtra("COMPANY_EMAIL").toString()
         val companyWebsite = intent.getStringExtra("COMPANY_WEB").toString()
@@ -96,60 +91,39 @@ class CompaniesInfoActivity : AppCompatActivity(), OnMapReadyCallback {
         }
         recyclerView.adapter = adapter
 
-        val commentInput = findViewById<EditText>(R.id.editText_comment)
-
-        // Adicionar listener para o Enter
-        commentInput.setOnEditorActionListener { _, actionId, event ->
-            if (actionId == EditorInfo.IME_ACTION_DONE ||
-                (event != null && event.keyCode == KeyEvent.KEYCODE_ENTER && event.action == KeyEvent.ACTION_DOWN)) {
-                val text = commentInput.text.toString()
-                if (text.isNotEmpty()) {
-                    val date = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault()).format(Date())
-                    val comment = Comment(null,"${R.string.comment_user}", text, date, companyId)
-                    lifecycleScope.launch {
-                        commentDao.insertComment(comment)
-                        commentInput.text.clear()
-                    }
-                }
-                true
-            } else {
-                false
-            }
-        }
-
         // Botão de enviar comentário (mantido para quem preferir clicar no botão)
         findViewById<Button>(R.id.buttonSend).setOnClickListener {
-            val text = commentInput.text.toString()
+            val text = findViewById<EditText>(R.id.editText_comment).text.toString()
             if (text.isNotEmpty()) {
                 val date = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault()).format(Date())
                 val comment = Comment(null,"${R.string.comment_user}", text, date, companyId)
                 lifecycleScope.launch {
                     commentDao.insertComment(comment)
-                    commentInput.text.clear()
+                    findViewById<EditText>(R.id.editText_comment).text.clear()
                 }
             }
         }
 
-        // Cancelar job anterior se existir
-        commentsJob?.cancel()
-
-        // Observar comentários em tempo real (em um único lifecycleScope)
-        commentsJob = lifecycleScope.launch {
-            // Usar distinctUntilChanged para evitar atualizações desnecessárias
-            commentDao.getCommentsByCompany(companyId)
-                .distinctUntilChanged()
-                .collect { comments ->
-                    val orderedList = comments
-                        .distinctBy { it.id } // Garantir que não há duplicatas
-                        .sortedByDescending { it.id }
-                    adapter.submitList(orderedList) {
-                        // Callback executado após a lista ser atualizada
-                        if (orderedList.isNotEmpty()) {
-                            recyclerView.smoothScrollToPosition(0)
-                        }
-                    }
-                }
-        }
+//        // Cancelar job anterior se existir
+//        commentsJob?.cancel()
+//
+//        // Observar comentários em tempo real (em um único lifecycleScope)
+//        commentsJob = lifecycleScope.launch {
+//            // Usar distinctUntilChanged para evitar atualizações desnecessárias
+//            commentDao.getCommentsByCompany(companyId)
+//                .distinctUntilChanged()
+//                .collect { comments ->
+//                    val orderedList = comments
+//                        .distinctBy { it.id } // Garantir que não há duplicatas
+//                        .sortedByDescending { it.id }
+//                    adapter.submitList(orderedList) {
+//                        // Callback executado após a lista ser atualizada
+//                        if (orderedList.isNotEmpty()) {
+//                            recyclerView.smoothScrollToPosition(0)
+//                        }
+//                    }
+//                }
+//        }
 
         // Botões de contato
         findViewById<Button>(R.id.buttonCall).setOnClickListener {
