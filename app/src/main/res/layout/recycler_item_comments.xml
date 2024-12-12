@@ -15,21 +15,21 @@
         android:padding="12dp">
 
         <TextView
-            android:id="@+id/comentarioUsuario"
+            android:id="@+id/textView_user"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textStyle="bold"
             android:textSize="14sp" />
 
         <TextView
-            android:id="@+id/comentarioTexto"
+            android:id="@+id/textView_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
             android:textSize="16sp" />
 
         <TextView
-            android:id="@+id/comentarioData"
+            android:id="@+id/textView_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"

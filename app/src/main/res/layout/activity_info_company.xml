@@ -18,7 +18,7 @@
             android:layout_height="100dp">
 
             <ImageButton
-                android:id="@+id/button1"
+                android:id="@+id/buttonBack"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
@@ -28,12 +28,12 @@
                 android:src="@drawable/ic_arrow_back" />
 
             <TextView
-                android:id="@+id/empresaNome"
+                android:id="@+id/title_company"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="25dp"
-                android:layout_toEndOf="@id/button1"
+                android:layout_toEndOf="@id/buttonBack"
                 android:textSize="30sp"
                 android:textStyle="bold" />
         </RelativeLayout>
@@ -54,12 +54,12 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Informações de Contato"
+                    android:text="@string/cardTitle_CompanyInfo"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/empresaMorada"
+                    android:id="@+id/textView_address"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
@@ -67,7 +67,7 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/empresaTelefone"
+                    android:id="@+id/textView_phone"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
@@ -75,7 +75,7 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/empresaEmail"
+                    android:id="@+id/textView_email"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
@@ -83,7 +83,7 @@
                     android:textSize="16sp" />
 
                 <TextView
-                    android:id="@+id/empresaSite"
+                    android:id="@+id/textView_website"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
@@ -97,12 +97,12 @@
                     android:orientation="horizontal">
 
                     <Button
-                        android:id="@+id/buttonLigar"
+                        android:id="@+id/buttonCall"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginEnd="8dp"
                         android:layout_weight="1"
-                        android:text="Ligar" />
+                        android:text="@string/bttxt_Call" />
 
                     <Button
                         android:id="@+id/buttonEmail"
@@ -110,15 +110,15 @@
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:layout_weight="1"
-                        android:text="Email" />
+                        android:text="@string/bttxt_Email" />
 
                     <Button
-                        android:id="@+id/buttonSite"
+                        android:id="@+id/buttonWeb"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_marginStart="8dp"
                         android:layout_weight="1"
-                        android:text="Site" />
+                        android:text="@string/bttxt_Site" />
                 </LinearLayout>
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
@@ -139,7 +139,7 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Vagas"
+                    android:text="@string/cardTitle_Placements"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
@@ -150,14 +150,14 @@
                     android:orientation="horizontal">
 
                     <TextView
-                        android:id="@+id/vagasDisponiveis"
+                        android:id="@+id/textView_placementsAvailable"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
                         android:textSize="16sp" />
 
                     <TextView
-                        android:id="@+id/vagasOcupadas"
+                        android:id="@+id/textView_placementsOcupied"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -196,12 +196,12 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Comentários"
+                    android:text="@string/cardTitle_Comments"
                     android:textSize="20sp"
                     android:textStyle="bold" />
 
                 <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/comentariosRecyclerView"
+                    android:id="@+id/recyclerView_comments"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp" />
@@ -213,20 +213,20 @@
                     android:orientation="horizontal">
 
                     <EditText
-                        android:id="@+id/comentarioInput"
+                        android:id="@+id/editText_comment"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:hint="Adicionar comentário"
+                        android:hint="@string/hint_comment"
                         android:padding="8dp"
                         android:imeOptions="actionDone"
                         android:inputType="text"/>
 
                     <Button
-                        android:id="@+id/enviarComentario"
+                        android:id="@+id/buttonSend"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Enviar" />
+                        android:text="@string/bttxt_Send" />
                 </LinearLayout>
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>

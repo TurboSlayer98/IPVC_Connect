@@ -19,18 +19,18 @@ class CompaniesActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_empresas)
+        setContentView(R.layout.activity_companies)
 
         // Get course ID from intent
         val courseId = intent.getIntExtra("COURSE_ID", -1)
         if (courseId == -1) {
-            Toast.makeText(this, "Error: Course not found", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "${R.string.msg_error_course}", Toast.LENGTH_SHORT).show()
             finish()
             return
         }
 
         // Set up back button
-        findViewById<ImageButton>(R.id.button1).setOnClickListener {
+        findViewById<ImageButton>(R.id.buttonBack).setOnClickListener {
             finish()
         }
 
@@ -55,7 +55,7 @@ class CompaniesActivity : AppCompatActivity() {
             override fun onFailure(call: Call<List<Company>>, t: Throwable) {
                 Toast.makeText(
                     this@CompaniesActivity,
-                    "Something went wrong ${t.message}",
+                    "${R.string.msg_Error} + ${t.message}",
                     Toast.LENGTH_SHORT
                 ).show()
             }

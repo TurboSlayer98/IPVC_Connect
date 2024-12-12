@@ -14,13 +14,13 @@ class CourseAdapter(private val courseList: List<Course>) : RecyclerView.Adapter
 
     // Define o ViewHolder para a RecyclerView
     class CourseViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val courseName: TextView = itemView.findViewById(R.id.cursoNome)
-        val courseDescription: TextView = itemView.findViewById(R.id.cursoDescricao)
+        val courseName: TextView = itemView.findViewById(R.id.textView_name)
+        val courseDescription: TextView = itemView.findViewById(R.id.textView_description)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CourseViewHolder {
         // Inflando o layout do item para o ViewHolder
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.recycler_item_cursos, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.recycler_item_courses, parent, false)
         return CourseViewHolder(view)
     }
 

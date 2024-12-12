@@ -16,7 +16,7 @@
         android:padding="12dp">
 
         <ImageView
-            android:id="@+id/escolaLogo"
+            android:id="@+id/imageView_name"
             android:layout_width="90dp"
             android:layout_height="90dp"
             android:layout_marginBottom="8dp"
@@ -25,7 +25,7 @@
             android:scaleType="fitCenter"/>
 
         <TextView
-            android:id="@+id/schoolName"
+            android:id="@+id/textView_name"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAlignment="center"
@@ -37,7 +37,7 @@
             android:ellipsize="end"/>
 
         <TextView
-            android:id="@+id/escolaDescricao"
+            android:id="@+id/textView_description"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:textAlignment="center"

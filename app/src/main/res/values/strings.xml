@@ -1,3 +1,22 @@
 <resources>
     <string name="app_name">IPVC Connect</string>
+    <string name="title_schools">Schools</string>
+    <string name="title_courses">Courses</string>
+    <string name="title_companies">Companies</string>
+    <string name="title_maps">Map</string>
+    <string name="bttxt_Start">Start</string>
+    <string name="bttxt_Map">Map</string>
+    <string name="cardTitle_CompanyInfo">Contact Information</string>
+    <string name="cardTitle_Placements">Placements</string>
+    <string name="cardTitle_Comments">Comments</string>
+    <string name="hint_comment">Add New Comment</string>
+    <string name="bttxt_Send">Send</string>
+    <string name="bttxt_Call">Call</string>
+    <string name="bttxt_Email">Email</string>
+    <string name="bttxt_Site">Website</string>
+    <string name="msg_Error">Someting went wrong</string>
+    <string name="msg_error_school">School not found!</string>
+    <string name="msg_error_course">Course not found!</string>
+    <string name="msg_error_company">Company not found!</string>
+    <string name="comment_user">Anonymous Comment</string>
 </resources>

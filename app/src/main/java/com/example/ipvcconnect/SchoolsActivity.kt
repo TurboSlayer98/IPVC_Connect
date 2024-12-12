@@ -19,10 +19,10 @@ class SchoolsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_escolas)
+        setContentView(R.layout.activity_schools)
 
         // Set up back button
-        findViewById<ImageButton>(R.id.button1).setOnClickListener {
+        findViewById<ImageButton>(R.id.buttonBack).setOnClickListener {
             finish()
         }
 
@@ -47,7 +47,7 @@ class SchoolsActivity : AppCompatActivity() {
             override fun onFailure(call: Call<List<School>>, t: Throwable) {
                 Toast.makeText(
                     this@SchoolsActivity,
-                    "Something went wrong ${t.message}",
+                    "${R.string.msg_Error} + ${t.message}",
                     Toast.LENGTH_SHORT
                 ).show()
             }

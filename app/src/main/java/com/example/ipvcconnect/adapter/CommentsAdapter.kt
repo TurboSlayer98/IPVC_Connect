@@ -13,9 +13,9 @@ import com.example.ipvcconnect.models.Comment
 class CommentsAdapter: ListAdapter<Comment, CommentsAdapter.CommentViewHolder>(CommentsDiffCallback()) {
 
     class CommentViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val user: TextView = itemView.findViewById(R.id.comentarioUsuario)
-        val text: TextView = itemView.findViewById(R.id.comentarioTexto)
-        val date: TextView = itemView.findViewById(R.id.comentarioData)
+        val user: TextView = itemView.findViewById(R.id.textView_user)
+        val text: TextView = itemView.findViewById(R.id.textView_text)
+        val date: TextView = itemView.findViewById(R.id.textView_date)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CommentViewHolder {

@@ -16,13 +16,13 @@ class SchoolAdapter(
     // Define o ViewHolder para a RecyclerView
     class SchoolViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         //val schoolLogo: ImageView = itemView.findViewById(R.id.schoolLogo)
-        val schoolName: TextView = itemView.findViewById(R.id.schoolName)
-        val schoolDescription: TextView = itemView.findViewById(R.id.escolaDescricao)
+        val schoolName: TextView = itemView.findViewById(R.id.textView_name)
+        val schoolDescription: TextView = itemView.findViewById(R.id.textView_description)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SchoolViewHolder {
         // Inflando o layout do item para o ViewHolder
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.recycler_item_escolas, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.recycler_item_schools, parent, false)
         return SchoolViewHolder(view)
     }
 

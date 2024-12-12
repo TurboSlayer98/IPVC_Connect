@@ -14,36 +14,41 @@ class CompaniesAdapter(private val companiesList: List<Company>) : RecyclerView.
 
     // Define o ViewHolder para a RecyclerView
     class CompaniesViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val companiesName: TextView = itemView.findViewById(R.id.empresaNome)
-        val companiesDescription: TextView = itemView.findViewById(R.id.empresaDescricao)
-        val companiesAddress: TextView = itemView.findViewById(R.id.empresaLocalizacao)
-        val caompaniesPlacements: TextView = itemView.findViewById(R.id.empresaVagas)
+        val companiesName: TextView = itemView.findViewById(R.id.textView_name)
+        val companiesDescription: TextView = itemView.findViewById(R.id.textView_description)
+        val companiesAddress: TextView = itemView.findViewById(R.id.textView_address)
+        val companiesPlacements: TextView = itemView.findViewById(R.id.textView_placements)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CompaniesViewHolder {
         // Inflando o layout do item para o ViewHolder
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.recycler_item_empresas, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.recycler_item_companies, parent, false)
         return CompaniesViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: CompaniesViewHolder, position: Int) {
         // Vincula os dados do usuário aos elementos da UI no ViewHolder
-        val companies = companiesList[position]
-        holder.companiesName.text = companies.name
-        holder.companiesDescription.text = companies.description
-        holder.companiesAddress.text = companies.address
-        holder.caompaniesPlacements.text = "Vagas disponíveis: ${companies.placements_available} | Ocupadas: ${companies.placements_ocupied}"
+        val company = companiesList[position]
+        holder.companiesName.text = company.name
+        holder.companiesDescription.text = company.description
+        holder.companiesAddress.text = company.address
+        holder.companiesPlacements.text = "Available: " + company.placements_available.toString() + " | " + "Ocupied: " + company.placements_ocupied.toString()
 
         // Set click listener for the entire item
         holder.itemView.setOnClickListener {
             // Handle school click
             val intent = Intent(holder.itemView.context, CompaniesInfoActivity::class.java)
-            intent.putExtra("COMPANY_ID", companies.id)
-            intent.putExtra("EMPRESA_LAT", companies.latitude)
-            intent.putExtra("EMPRESA_LNG", companies.longitude)
-            intent.putExtra("COMPANY_PHONE", companies.phone)
-            intent.putExtra("COMPANY_EMAIL", companies.email)
-            intent.putExtra("COMPANY_WEB", companies.website)
+            intent.putExtra("COMPANY_ID", company.id)
+            intent.putExtra("COMPANY_NAME", company.name)
+            intent.putExtra("COMPANY_ADDRESS", company.address)
+            intent.putExtra("COMPANY_DESCRIPTION", company.description)
+            intent.putExtra("COMPANY_AVAILABLE", company.placements_available)
+            intent.putExtra("COMPANY_OCUPIED", company.placements_ocupied)
+            intent.putExtra("COMPANY_PHONE", company.phone)
+            intent.putExtra("COMPANY_EMAIL", company.email)
+            intent.putExtra("COMPANY_WEB", company.website)
+            intent.putExtra("COMPANY_LAT", company.latitude)
+            intent.putExtra("COMPANY_LNG", company.longitude)
             holder.itemView.context.startActivity(intent)
         }
     }
