@@ -61,7 +61,7 @@ class CompaniesInfoActivity : AppCompatActivity(), OnMapReadyCallback {
         latlng = LatLng(intent.getDoubleExtra("COMPANY_LAT", 0.0), intent.getDoubleExtra("COMPANY_LNG", 0.0))
 
         if (companyId == -1) {
-            Toast.makeText(this, "${R.string.msg_error_company}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.msg_error_company), Toast.LENGTH_SHORT).show()
             finish()
             return
         }
@@ -96,7 +96,7 @@ class CompaniesInfoActivity : AppCompatActivity(), OnMapReadyCallback {
             val text = findViewById<EditText>(R.id.editText_comment).text.toString()
             if (text.isNotEmpty()) {
                 val date = SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault()).format(Date())
-                val comment = Comment(null,"${R.string.comment_user}", text, date, companyId)
+                val comment = Comment(null, getString(R.string.comment_user), text, date, companyId)
                 lifecycleScope.launch {
                     commentDao.insertComment(comment)
                     findViewById<EditText>(R.id.editText_comment).text.clear()
@@ -104,26 +104,26 @@ class CompaniesInfoActivity : AppCompatActivity(), OnMapReadyCallback {
             }
         }
 
-//        // Cancelar job anterior se existir
-//        commentsJob?.cancel()
-//
-//        // Observar comentários em tempo real (em um único lifecycleScope)
-//        commentsJob = lifecycleScope.launch {
-//            // Usar distinctUntilChanged para evitar atualizações desnecessárias
-//            commentDao.getCommentsByCompany(companyId)
-//                .distinctUntilChanged()
-//                .collect { comments ->
-//                    val orderedList = comments
-//                        .distinctBy { it.id } // Garantir que não há duplicatas
-//                        .sortedByDescending { it.id }
-//                    adapter.submitList(orderedList) {
-//                        // Callback executado após a lista ser atualizada
-//                        if (orderedList.isNotEmpty()) {
-//                            recyclerView.smoothScrollToPosition(0)
-//                        }
-//                    }
-//                }
-//        }
+        // Cancelar job anterior se existir
+        commentsJob?.cancel()
+
+        // Observar comentários em tempo real (em um único lifecycleScope)
+        commentsJob = lifecycleScope.launch {
+            // Usar distinctUntilChanged para evitar atualizações desnecessárias
+            commentDao.getCommentsByCompany(companyId)
+                .distinctUntilChanged()
+                .collect { comments ->
+                    val orderedList = comments
+                        .distinctBy { it.id } // Garantir que não há duplicatas
+                        .sortedByDescending { it.id }
+                    adapter.submitList(orderedList) {
+                        // Callback executado após a lista ser atualizada
+                        if (orderedList.isNotEmpty()) {
+                            recyclerView.smoothScrollToPosition(0)
+                        }
+                    }
+                }
+        }
 
         // Botões de contato
         findViewById<Button>(R.id.buttonCall).setOnClickListener {
@@ -167,7 +167,7 @@ class CompaniesInfoActivity : AppCompatActivity(), OnMapReadyCallback {
             override fun onFailure(call: Call<Company>, t: Throwable) {
                 Toast.makeText(
                     this@CompaniesInfoActivity,
-                    "${R.string.msg_Error} + ${t.message}",
+                    getString(R.string.msg_Error) + "${t.message}",
                     Toast.LENGTH_SHORT
                 ).show()
             }

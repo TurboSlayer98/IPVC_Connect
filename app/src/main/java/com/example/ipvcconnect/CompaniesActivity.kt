@@ -24,7 +24,7 @@ class CompaniesActivity : AppCompatActivity() {
         // Get course ID from intent
         val courseId = intent.getIntExtra("COURSE_ID", -1)
         if (courseId == -1) {
-            Toast.makeText(this, "${R.string.msg_error_course}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.msg_error_course), Toast.LENGTH_SHORT).show()
             finish()
             return
         }
@@ -55,7 +55,7 @@ class CompaniesActivity : AppCompatActivity() {
             override fun onFailure(call: Call<List<Company>>, t: Throwable) {
                 Toast.makeText(
                     this@CompaniesActivity,
-                    "${R.string.msg_Error} + ${t.message}",
+                    getString(R.string.msg_Error) + "${t.message}",
                     Toast.LENGTH_SHORT
                 ).show()
             }

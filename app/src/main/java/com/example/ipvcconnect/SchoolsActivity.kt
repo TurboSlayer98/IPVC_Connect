@@ -47,7 +47,7 @@ class SchoolsActivity : AppCompatActivity() {
             override fun onFailure(call: Call<List<School>>, t: Throwable) {
                 Toast.makeText(
                     this@SchoolsActivity,
-                    "${R.string.msg_Error} + ${t.message}",
+                    getString(R.string.msg_Error) + "${t.message}",
                     Toast.LENGTH_SHORT
                 ).show()
             }
