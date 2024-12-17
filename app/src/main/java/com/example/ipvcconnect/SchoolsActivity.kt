@@ -5,8 +5,6 @@ import android.widget.ImageButton
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ipvcconnect.adapter.SchoolAdapter
@@ -17,19 +15,14 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class EscolasActivity : AppCompatActivity() {
+class SchoolsActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_escolas)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.escolas_activity)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
+        setContentView(R.layout.activity_schools)
 
         // Set up back button
-        findViewById<ImageButton>(R.id.button1).setOnClickListener {
+        findViewById<ImageButton>(R.id.buttonBack).setOnClickListener {
             finish()
         }
 
@@ -46,15 +39,15 @@ class EscolasActivity : AppCompatActivity() {
                 if (response.isSuccessful) {
                     recyclerView.apply {
                         setHasFixedSize(true)
-                        layoutManager = LinearLayoutManager(this@EscolasActivity)
+                        layoutManager = LinearLayoutManager(this@SchoolsActivity)
                         adapter = SchoolAdapter(response.body()!!)
                     }
                 }
             }
             override fun onFailure(call: Call<List<School>>, t: Throwable) {
                 Toast.makeText(
-                    this@EscolasActivity,
-                    "Something went wrong ${t.message}",
+                    this@SchoolsActivity,
+                    getString(R.string.msg_Error) + "${t.message}",
                     Toast.LENGTH_SHORT
                 ).show()
             }

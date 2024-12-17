@@ -2,9 +2,10 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
 
     <application
         android:allowBackup="true"
@@ -19,33 +20,22 @@
 
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyDM_Sl8k-XJPh6uMW3WrKax-_s2zw6mxNo" />
+            android:value="AIzaSyB5kF9dKJx7c4jH5y"/>
 
-        <activity
-            android:name=".MapsActivity"
-            android:exported="false" />
-        <activity
-            android:name=".CompaniesInfoActivity"
-            android:exported="false" />
-        <activity
-            android:name=".CompaniesActivity"
-            android:exported="false" />
-        <activity
-            android:name=".CoursesActivity"
-            android:exported="false" />
-        <activity
-            android:name=".SchoolsActivity"
-            android:exported="false" />
         <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
 
-    </application>
+        <activity android:name=".EscolasActivity" />
+        <activity android:name=".CursosActivity" />
+        <activity android:name=".EmpresasActivity" />
+        <activity android:name=".InfoEmpresaActivity" />
+        <activity android:name=".MapsActivity" />
 
+    </application>
 </manifest>

@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.ipvcconnect.CursosActivity
+import com.example.ipvcconnect.CoursesActivity
 import com.example.ipvcconnect.R
 import com.example.ipvcconnect.models.School
 
@@ -16,13 +16,13 @@ class SchoolAdapter(
     // Define o ViewHolder para a RecyclerView
     class SchoolViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         //val schoolLogo: ImageView = itemView.findViewById(R.id.schoolLogo)
-        val schoolName: TextView = itemView.findViewById(R.id.cardTitle1)
-        val schoolDescription: TextView = itemView.findViewById(R.id.cardTitle2)
+        val schoolName: TextView = itemView.findViewById(R.id.textView_name)
+        val schoolDescription: TextView = itemView.findViewById(R.id.textView_description)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SchoolViewHolder {
         // Inflando o layout do item para o ViewHolder
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.recycler_item_escolas, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.recycler_item_schools, parent, false)
         return SchoolViewHolder(view)
     }
 
@@ -36,7 +36,7 @@ class SchoolAdapter(
         // Set click listener for the entire item
         holder.itemView.setOnClickListener {
             // Handle school click
-            val intent = Intent(holder.itemView.context, CursosActivity::class.java)
+            val intent = Intent(holder.itemView.context, CoursesActivity::class.java)
             intent.putExtra("SCHOOL_ID", school.id)
             holder.itemView.context.startActivity(intent)
         }

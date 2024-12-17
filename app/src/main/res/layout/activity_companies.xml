@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/cursos_activity"
+    android:id="@+id/empresas_activity"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".CursosActivity"
+    tools:context=".CompaniesActivity"
     android:background="@color/md_theme_background">
 
     <RelativeLayout
@@ -14,13 +15,13 @@
         android:layout_height="100dp">
 
         <ImageButton
-            android:id="@+id/button1"
+            android:id="@+id/buttonBack"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginStart="20dp"
             android:layout_marginTop="20dp"
-            android:src="@drawable/arrow_back_40"
+            android:src="@drawable/ic_arrow_back"
             android:background="?android:attr/selectableItemBackgroundBorderless"/>
 
         <TextView
@@ -29,24 +30,18 @@
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
             android:layout_marginStart="25dp"
-            android:text="Cursos"
+            android:text="@string/title_companies"
             android:textSize="40sp"
             android:textStyle="bold"
-            android:layout_toEndOf="@id/button1"/>
+            android:layout_toEndOf="@id/buttonBack"/>
     </RelativeLayout>
 
-    <RelativeLayout
-        android:id="@+id/relativeLayout2"
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/relativeLayout1">
+        android:layout_height="match_parent"
+        android:layout_below="@id/relativeLayout1"
+        android:layout_marginTop="8dp"
+        android:padding="8dp"/>
 
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/recyclerView"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginHorizontal="25dp"
-            tools:listitem="@layout/recycler_item_cursos">
-        </androidx.recyclerview.widget.RecyclerView>
-    </RelativeLayout>
 </RelativeLayout>

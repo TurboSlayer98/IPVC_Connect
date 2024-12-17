@@ -1,8 +1,15 @@
 package com.example.ipvcconnect.models
 
+import androidx.room.ColumnInfo
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "comments")
 data class Comment(
-    val id: Int,
-    val companyId: Int,
-    val text: String,
-    val createdAt: String
-) 
+    @PrimaryKey(autoGenerate = true) val id: Int? = null,
+    @ColumnInfo(name = "user") val user: String,
+    @ColumnInfo(name = "text") val text: String,
+    @ColumnInfo(name = "date") val date: String,
+    @ColumnInfo(name = "company_id") val company_id: Int
+)
+

@@ -5,8 +5,6 @@ import android.widget.ImageButton
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ipvcconnect.adapter.CourseAdapter
@@ -17,27 +15,22 @@ import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class CursosActivity : AppCompatActivity() {
+class CoursesActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContentView(R.layout.activity_cursos)
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.cursos_activity)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
+        setContentView(R.layout.activity_courses)
 
         // Get school ID from intent
         val schoolId = intent.getIntExtra("SCHOOL_ID", -1)
         if (schoolId == -1) {
-            Toast.makeText(this, "Error: School not found", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, getString(R.string.msg_error_school), Toast.LENGTH_SHORT).show()
             finish()
             return
         }
 
         // Set up back button
-        findViewById<ImageButton>(R.id.button1).setOnClickListener {
+        findViewById<ImageButton>(R.id.buttonBack).setOnClickListener {
             finish()
         }
 
@@ -54,7 +47,7 @@ class CursosActivity : AppCompatActivity() {
                 if (response.isSuccessful) {
                     recyclerView.apply {
                         setHasFixedSize(true)
-                        layoutManager = LinearLayoutManager(this@CursosActivity)
+                        layoutManager = LinearLayoutManager(this@CoursesActivity)
                         adapter = CourseAdapter(response.body()!!)
                     }
                 }
@@ -62,8 +55,8 @@ class CursosActivity : AppCompatActivity() {
 
             override fun onFailure(call: Call<List<Course>>, t: Throwable) {
                 Toast.makeText(
-                    this@CursosActivity,
-                    "Something went wrong ${t.message}",
+                    this@CoursesActivity,
+                    getString(R.string.msg_Error) + "${t.message}",
                     Toast.LENGTH_SHORT
                 ).show()
             }

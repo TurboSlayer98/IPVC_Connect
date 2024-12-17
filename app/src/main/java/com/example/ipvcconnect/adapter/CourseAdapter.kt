@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.example.ipvcconnect.EmpresasActivity
+import com.example.ipvcconnect.CompaniesActivity
 import com.example.ipvcconnect.R
 import com.example.ipvcconnect.models.Course
 
@@ -14,13 +14,13 @@ class CourseAdapter(private val courseList: List<Course>) : RecyclerView.Adapter
 
     // Define o ViewHolder para a RecyclerView
     class CourseViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val courseName: TextView = itemView.findViewById(R.id.cardTitle1)
-        val courseDescription: TextView = itemView.findViewById(R.id.cardTitle2)
+        val courseName: TextView = itemView.findViewById(R.id.textView_name)
+        val courseDescription: TextView = itemView.findViewById(R.id.textView_description)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CourseViewHolder {
         // Inflando o layout do item para o ViewHolder
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.recycler_item_escolas, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.recycler_item_courses, parent, false)
         return CourseViewHolder(view)
     }
 
@@ -34,7 +34,7 @@ class CourseAdapter(private val courseList: List<Course>) : RecyclerView.Adapter
         // Set click listener for the entire item
         holder.itemView.setOnClickListener {
             // Handle school click
-            val intent = Intent(holder.itemView.context, EmpresasActivity::class.java)
+            val intent = Intent(holder.itemView.context, CompaniesActivity::class.java)
             intent.putExtra("COURSE_ID", course.id)
             holder.itemView.context.startActivity(intent)
         }

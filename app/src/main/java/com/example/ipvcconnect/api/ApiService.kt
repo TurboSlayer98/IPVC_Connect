@@ -20,6 +20,9 @@ interface ApiService {
     @GET("courses/{id}/companies")
     fun getCompaniesByCourse(@Path("id") courseId: Int): Call<List<Company>>
 
+    @GET("/companies")
+    fun getAllCompanies(): Call<List<Company>>
+
     @GET("companies/{id}")
     fun getCompany(@Path("id") companyId: Int): Call<Company>
 
