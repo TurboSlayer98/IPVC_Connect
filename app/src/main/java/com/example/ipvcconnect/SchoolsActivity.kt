@@ -25,7 +25,6 @@ class SchoolsActivity : AppCompatActivity() {
         findViewById<ImageButton>(R.id.buttonBack).setOnClickListener {
             finish()
         }
-
         loadSchools()
     }
 
