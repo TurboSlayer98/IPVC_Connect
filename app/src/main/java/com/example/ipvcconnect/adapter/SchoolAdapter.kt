@@ -4,8 +4,10 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.ipvcconnect.CoursesActivity
 import com.example.ipvcconnect.R
 import com.example.ipvcconnect.models.School
@@ -15,9 +17,9 @@ class SchoolAdapter(
 
     // Define o ViewHolder para a RecyclerView
     class SchoolViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        //val schoolLogo: ImageView = itemView.findViewById(R.id.schoolLogo)
         val schoolName: TextView = itemView.findViewById(R.id.textView_name)
         val schoolDescription: TextView = itemView.findViewById(R.id.textView_description)
+        val schoolLogo: ImageView = itemView.findViewById(R.id.imageView_logo)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SchoolViewHolder {
@@ -29,9 +31,13 @@ class SchoolAdapter(
     override fun onBindViewHolder(holder: SchoolViewHolder, position: Int) {
         // Vincula os dados do usuário aos elementos da UI no ViewHolder
         val school = schoolList[position]
-        //holder.schoolLogo
         holder.schoolName.text = school.name
         holder.schoolDescription.text = school.description
+        
+        // Load the logo using Glide
+        Glide.with(holder.itemView.context)
+            .load(school.logoUrl)
+            .into(holder.schoolLogo)
         
         // Set click listener for the entire item
         holder.itemView.setOnClickListener {

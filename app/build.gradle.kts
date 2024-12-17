@@ -75,4 +75,8 @@ dependencies {
     implementation(libs.androidx.room.ktx)
     ksp(libs.androidx.room.compiler)
     androidTestImplementation(libs.androidx.room.testing)
+
+    // Images
+    implementation (libs.glide)
+    ksp ("com.github.bumptech.glide:ksp:4.15.1")
 }
