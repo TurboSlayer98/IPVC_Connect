@@ -25,6 +25,7 @@ import com.example.ipvcconnect.adapter.CommentsAdapter
 import com.example.ipvcconnect.dataaccessobjects.CommentsDao
 import com.example.ipvcconnect.database.AppDatabase
 import com.example.ipvcconnect.models.Comment
+import com.example.ipvcconnect.utils.GlobalVars
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -42,7 +43,6 @@ class CompaniesInfoActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private lateinit var mMap: GoogleMap
     private lateinit var adapter: CommentsAdapter
-    private lateinit var database: AppDatabase
     private lateinit var commentDao: CommentsDao
     private lateinit var latlng: LatLng
     private var commentsJob: Job? = null
@@ -69,8 +69,9 @@ class CompaniesInfoActivity : AppCompatActivity(), OnMapReadyCallback {
         loadCompany(companyId)
 
         // Inicializar banco de dados
-        database = AppDatabase.getDatabase(this)
-        commentDao = database.CommentsDao()
+        GlobalVars.database = AppDatabase.getDatabase(this)
+        commentDao = GlobalVars.database.CommentsDao()
+        GlobalVars.favouritesDao = GlobalVars.database.FavouritesDao()
 
         // Set up back button
         findViewById<ImageButton>(R.id.buttonBack).setOnClickListener {
