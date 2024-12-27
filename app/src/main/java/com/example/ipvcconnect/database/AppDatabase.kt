@@ -7,8 +7,9 @@ import androidx.room.RoomDatabase
 import com.example.ipvcconnect.models.Comment
 import com.example.ipvcconnect.dataaccessobjects.CommentsDao
 import com.example.ipvcconnect.dataaccessobjects.FavouritesDao
+import com.example.ipvcconnect.models.Favourite
 
-@Database(entities = [Comment::class], version = 1)
+@Database(entities = [Comment::class, Favourite::class], version = 2)
 abstract class AppDatabase: RoomDatabase() {
     abstract fun CommentsDao(): CommentsDao
     abstract fun FavouritesDao(): FavouritesDao

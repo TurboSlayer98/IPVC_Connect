@@ -4,7 +4,6 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.ImageButton
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ipvcconnect.CompaniesInfoActivity
@@ -19,7 +18,6 @@ class CompaniesAdapter(private val companiesList: List<Company>) : RecyclerView.
         val companiesDescription: TextView = itemView.findViewById(R.id.textView_description)
         val companiesAddress: TextView = itemView.findViewById(R.id.textView_address)
         val companiesPlacements: TextView = itemView.findViewById(R.id.textView_placements)
-        val buttonFav: ImageButton = itemView.findViewById(R.id.buttonFav)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CompaniesViewHolder {
@@ -38,7 +36,7 @@ class CompaniesAdapter(private val companiesList: List<Company>) : RecyclerView.
 
         // Set click listener for the entire item
         holder.itemView.setOnClickListener {
-            // Handle school click
+            // Handle company click
             val intent = Intent(holder.itemView.context, CompaniesInfoActivity::class.java)
             intent.putExtra("COMPANY_ID", company.id)
             intent.putExtra("COMPANY_NAME", company.name)
@@ -52,10 +50,6 @@ class CompaniesAdapter(private val companiesList: List<Company>) : RecyclerView.
             intent.putExtra("COMPANY_LAT", company.latitude)
             intent.putExtra("COMPANY_LNG", company.longitude)
             holder.itemView.context.startActivity(intent)
-        }
-
-        holder.buttonFav.setOnClickListener{
-
         }
     }
 
