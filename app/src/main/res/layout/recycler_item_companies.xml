@@ -20,8 +20,7 @@
             android:layout_height="wrap_content"
             android:textSize="20sp"
             android:textStyle="bold"
-            android:textColor="@android:color/black"
-            android:layout_marginBottom="8dp"/>
+            android:textColor="@android:color/black"/>
 
         <TextView
             android:id="@+id/textView_description"

@@ -13,8 +13,6 @@ import retrofit2.Callback
 import retrofit2.Response
 import android.content.Intent
 import android.net.Uri
-import android.view.KeyEvent
-import android.view.inputmethod.EditorInfo
 import android.widget.Button
 import android.widget.EditText
 import androidx.activity.enableEdgeToEdge
@@ -23,8 +21,10 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.ipvcconnect.adapter.CommentsAdapter
 import com.example.ipvcconnect.dataaccessobjects.CommentsDao
+import com.example.ipvcconnect.dataaccessobjects.FavouritesDao
 import com.example.ipvcconnect.database.AppDatabase
 import com.example.ipvcconnect.models.Comment
+import com.example.ipvcconnect.models.Favourite
 import com.google.android.gms.maps.CameraUpdateFactory
 import com.google.android.gms.maps.GoogleMap
 import com.google.android.gms.maps.OnMapReadyCallback
@@ -44,9 +44,11 @@ class CompaniesInfoActivity : AppCompatActivity(), OnMapReadyCallback {
     private lateinit var adapter: CommentsAdapter
     private lateinit var database: AppDatabase
     private lateinit var commentDao: CommentsDao
+    private lateinit var favouritesDao: FavouritesDao
     private lateinit var latlng: LatLng
     private var commentsJob: Job? = null
-    //private lateinit var company: Company
+    private var favouritesJob: Job? = null
+    private var isFavorite: Boolean = false // Track favorite state
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,10 +69,12 @@ class CompaniesInfoActivity : AppCompatActivity(), OnMapReadyCallback {
         }
 
         loadCompany(companyId)
+        //loadFavourites(companyId)
 
         // Inicializar banco de dados
         database = AppDatabase.getDatabase(this)
         commentDao = database.CommentsDao()
+        favouritesDao = database.FavouritesDao()
 
         // Set up back button
         findViewById<ImageButton>(R.id.buttonBack).setOnClickListener {
@@ -125,6 +129,24 @@ class CompaniesInfoActivity : AppCompatActivity(), OnMapReadyCallback {
                 }
         }
 
+        favouritesJob?.cancel()
+
+        // Observar favoritos em tempo real (em um único lifecycleScope)
+        favouritesJob = lifecycleScope.launch {
+            // Usar distinctUntilChanged para evitar atualizações desnecessárias
+            favouritesDao.getFavourites()
+                .distinctUntilChanged()
+                .collect { favourites ->
+                    isFavorite = favourites.any { it.company_id == companyId }
+                    updateFavoriteButton()
+                }
+        }
+
+        // Set up favorite button click listener
+        findViewById<ImageButton>(R.id.buttonFav).setOnClickListener {
+            toggleFavorite(companyId)
+        }
+
         // Botões de contato
         findViewById<Button>(R.id.buttonCall).setOnClickListener {
             val intent = Intent(Intent.ACTION_DIAL).apply {
@@ -143,6 +165,46 @@ class CompaniesInfoActivity : AppCompatActivity(), OnMapReadyCallback {
         findViewById<Button>(R.id.buttonWeb).setOnClickListener {
             val intent = Intent(Intent.ACTION_VIEW, Uri.parse(companyWebsite))
             startActivity(intent)
+        }
+    }
+
+//    private fun loadFavourites(companyId: Int) {
+//
+//        lifecycleScope.launch {
+//            favouritesDao.getFavourites().collect { favourites ->
+//                isFavorite = favourites.any { it.company_id == companyId }
+//                updateFavoriteButton()
+//            }
+//        }
+//    }
+
+    private fun updateFavoriteButton() {
+        val favoriteButton = findViewById<ImageButton>(R.id.buttonFav)
+        if (isFavorite) {
+            favoriteButton.setImageResource(R.drawable.ic_star_24) // Filled star
+        } else {
+            favoriteButton.setImageResource(R.drawable.ic_star_outline_24) // Outline star
+        }
+    }
+
+    private fun toggleFavorite(companyId: Int) {
+        lifecycleScope.launch {
+            if (isFavorite) {
+                // Remove from favorites
+                favouritesDao.getFavourites().collect { favourites ->
+                    val favouriteToRemove = favourites.find { it.company_id == companyId }
+                    if (favouriteToRemove != null) {
+                        favouritesDao.removeFavourite(favouriteToRemove.id!!)
+                    }
+                }
+                isFavorite = false
+            } else {
+                // Add to favorites
+                val favourite = Favourite(company_id = companyId)
+                favouritesDao.addFavourite(favourite)
+                isFavorite = true
+            }
+            updateFavoriteButton() // Update button state
         }
     }
 

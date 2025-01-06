@@ -29,7 +29,7 @@ class SchoolAdapter(
     }
 
     override fun onBindViewHolder(holder: SchoolViewHolder, position: Int) {
-        // Vincula os dados do usuário aos elementos da UI no ViewHolder
+        // Vincula os dados da escola aos elementos da UI no ViewHolder
         val school = schoolList[position]
         holder.schoolName.text = school.name
         holder.schoolDescription.text = school.description

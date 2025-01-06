@@ -36,7 +36,7 @@ class CompaniesAdapter(private val companiesList: List<Company>) : RecyclerView.
 
         // Set click listener for the entire item
         holder.itemView.setOnClickListener {
-            // Handle school click
+            // Handle company click
             val intent = Intent(holder.itemView.context, CompaniesInfoActivity::class.java)
             intent.putExtra("COMPANY_ID", company.id)
             intent.putExtra("COMPANY_NAME", company.name)
