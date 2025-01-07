@@ -19,4 +19,6 @@
     <string name="msg_error_course">Course not found!</string>
     <string name="msg_error_company">Company not found!</string>
     <string name="comment_user">Anonymous Comment</string>
+    <string name="title_favourites">Favourites</string>
+    <string name="bttxt_Favourites">Favourites</string>
 </resources>

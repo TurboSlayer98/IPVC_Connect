@@ -10,6 +10,7 @@ import androidx.activity.enableEdgeToEdge
 import android.widget.Button
 import android.widget.CheckBox
 import androidx.appcompat.app.AppCompatActivity
+import android.widget.ImageButton
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -28,6 +29,12 @@ class MainActivity : AppCompatActivity() {
         val buttonMaps = findViewById<Button>(R.id.buttonMaps)
         buttonMaps.setOnClickListener {
             val intent = Intent(this, MapsActivity::class.java)
+            startActivity(intent)
+        }
+
+        val buttonFavourites = findViewById<Button>(R.id.buttonFavourites)
+        buttonFavourites.setOnClickListener {
+            val intent = Intent(this, FavouritesActivity::class.java)
             startActivity(intent)
         }
     }

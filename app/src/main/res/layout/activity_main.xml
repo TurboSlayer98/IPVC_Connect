@@ -54,5 +54,15 @@
             android:text="@string/bttxt_Map"
             android:textSize="30sp"
             android:layout_centerHorizontal="true"/>
+
+        <Button
+            android:id="@+id/buttonFavourites"
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/buttonMaps"
+            android:layout_marginTop="20dp"
+            android:text="@string/bttxt_Favourites"
+            android:textSize="30sp"
+            android:layout_centerHorizontal="true"/>
     </RelativeLayout>
 </RelativeLayout>

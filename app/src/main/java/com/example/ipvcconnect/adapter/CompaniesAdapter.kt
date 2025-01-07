@@ -27,28 +27,34 @@ class CompaniesAdapter(private val companiesList: List<Company>) : RecyclerView.
     }
 
     override fun onBindViewHolder(holder: CompaniesViewHolder, position: Int) {
-        // Vincula os dados do usuário aos elementos da UI no ViewHolder
-        val company = companiesList[position]
-        holder.companiesName.text = company.name
-        holder.companiesDescription.text = company.description
-        holder.companiesAddress.text = company.address
-        holder.companiesPlacements.text = "Available: " + company.placements_available.toString() + " | " + "Ocupied: " + company.placements_ocupied.toString()
+        if (companiesList.isEmpty()) {
+            // Handle empty list case
+            holder.itemView.visibility = View.GONE
+        } else {
+            // Existing binding logic
+            val company = companiesList[position]
+            holder.companiesName.text = company.name
+            holder.companiesDescription.text = company.description
+            holder.companiesAddress.text = company.address
+            holder.companiesPlacements.text = "Available: ${company.placements_available} | Ocupied: ${company.placements_ocupied}"
+            holder.itemView.visibility = View.VISIBLE
+        }
 
         // Set click listener for the entire item
         holder.itemView.setOnClickListener {
             // Handle company click
             val intent = Intent(holder.itemView.context, CompaniesInfoActivity::class.java)
-            intent.putExtra("COMPANY_ID", company.id)
-            intent.putExtra("COMPANY_NAME", company.name)
-            intent.putExtra("COMPANY_ADDRESS", company.address)
-            intent.putExtra("COMPANY_DESCRIPTION", company.description)
-            intent.putExtra("COMPANY_AVAILABLE", company.placements_available)
-            intent.putExtra("COMPANY_OCUPIED", company.placements_ocupied)
-            intent.putExtra("COMPANY_PHONE", company.phone)
-            intent.putExtra("COMPANY_EMAIL", company.email)
-            intent.putExtra("COMPANY_WEB", company.website)
-            intent.putExtra("COMPANY_LAT", company.latitude)
-            intent.putExtra("COMPANY_LNG", company.longitude)
+            intent.putExtra("COMPANY_ID", companiesList[position].id)
+            intent.putExtra("COMPANY_NAME", companiesList[position].name)
+            intent.putExtra("COMPANY_ADDRESS", companiesList[position].address)
+            intent.putExtra("COMPANY_DESCRIPTION", companiesList[position].description)
+            intent.putExtra("COMPANY_AVAILABLE", companiesList[position].placements_available)
+            intent.putExtra("COMPANY_OCUPIED", companiesList[position].placements_ocupied)
+            intent.putExtra("COMPANY_PHONE", companiesList[position].phone)
+            intent.putExtra("COMPANY_EMAIL", companiesList[position].email)
+            intent.putExtra("COMPANY_WEB", companiesList[position].website)
+            intent.putExtra("COMPANY_LAT", companiesList[position].latitude)
+            intent.putExtra("COMPANY_LNG", companiesList[position].longitude)
             holder.itemView.context.startActivity(intent)
         }
     }

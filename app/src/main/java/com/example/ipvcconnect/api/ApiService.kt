@@ -3,10 +3,8 @@ package com.example.ipvcconnect.api
 import com.example.ipvcconnect.models.Comment
 import com.example.ipvcconnect.models.Company
 import com.example.ipvcconnect.models.Course
-import com.example.ipvcconnect.models.Course_Company
 import com.example.ipvcconnect.models.School
 import retrofit2.Call
-import retrofit2.Response
 import retrofit2.http.*
 
 interface ApiService {
