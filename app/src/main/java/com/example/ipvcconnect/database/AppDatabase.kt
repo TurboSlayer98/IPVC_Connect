@@ -9,7 +9,7 @@ import com.example.ipvcconnect.dataaccessobjects.CommentsDao
 import com.example.ipvcconnect.dataaccessobjects.FavouritesDao
 import com.example.ipvcconnect.models.Favourite
 
-@Database(entities = [Comment::class, Favourite::class], version = 2)
+@Database(entities = [Comment::class, Favourite::class], version = 2, exportSchema = false)
 abstract class AppDatabase: RoomDatabase() {
     abstract fun CommentsDao(): CommentsDao
     abstract fun FavouritesDao(): FavouritesDao
